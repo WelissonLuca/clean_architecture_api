@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "git@github.com:WelissonLuca/clean_architecture_api.git",
   "author": "Welisson luca <welissonluca17@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-commit-msg-linter": "^3.2.8"
+  }
 }
