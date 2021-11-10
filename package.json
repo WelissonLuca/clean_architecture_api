@@ -6,9 +6,19 @@
   "author": "Welisson luca <welissonluca17@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ext .js,.ts",
-    "test": "jest"
+    "lint": "eslint 'src/**' --fix",
+    "test": "jest",
+    "test:staged": "jest -"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  } ,
+  
+  "lint-staged": {
+    "src/**/*": ["yarn lint --fix", "npm run test:staged", "git add"]
+    },
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.7",
