@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint 'src/**' --fix",
     "test": "jest",
-    "test:staged": "jest -",
+    "test:staged": "jest -passWithNoTests",
     "prepare": "husky install"
   },
   "husky": {
