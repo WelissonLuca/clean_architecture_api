@@ -1,0 +1,19 @@
+import { SignupController } from './signup';
+
+describe('Signup Controller', () => {
+  it('should return for handle if no name is provided', () => {
+    const sut = new SignupController();
+
+    const httpRequest = {
+      body: {
+        email: 'any email',
+        password: 'any password',
+        passwordConfirmation: 'any password confirmation',
+      },
+    };
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(400);
+  });
+});
