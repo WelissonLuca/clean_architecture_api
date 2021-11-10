@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint 'src/**' --fix",
-    "test": "jest -passWithNoTests",
-    "test:staged": "jest -passWithNoTests",
+    "test": "jest --passWithNoTests --watch",
+    "test:staged": "jest --passWithNoTests",
     "prepare": "husky install"
   },
   "husky": {
