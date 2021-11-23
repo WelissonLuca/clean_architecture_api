@@ -7,13 +7,26 @@ interface ISutTypes {
   emailValidatorStub: IEmailValidator;
 }
 
-const makeSut = (): ISutTypes => {
+const makeEmailValidator = (): IEmailValidator => {
   class EmailValidatorStub {
     isValid(email: string): boolean {
       return true;
     }
   }
-  const emailValidatorStub = new EmailValidatorStub();
+  return new EmailValidatorStub();
+};
+
+const makeEmailValidatorIfError = (): IEmailValidator => {
+  class EmailValidatorStub {
+    isValid(email: string): boolean {
+      throw new Error();
+    }
+  }
+  return new EmailValidatorStub();
+};
+
+const makeSut = (): ISutTypes => {
+  const emailValidatorStub = makeEmailValidator();
   const sut = new SignupController(emailValidatorStub);
 
   return {
@@ -133,7 +146,8 @@ describe('Signup Controller', () => {
   });
 
   it('should return 500 if email validator throws', () => {
-    const { sut, emailValidatorStub } = makeSut();
+    const emailValidatorStub = makeEmailValidatorIfError();
+    const sut = new SignupController(emailValidatorStub);
 
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
       throw new Error();

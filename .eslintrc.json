@@ -48,6 +48,8 @@
         "ts": "never"
       }
     ],
+    "max-classes-per-file": "off",
+    
    "no-restricted-syntax": "off",
     "import-helpers/order-imports": [
       "warn",
