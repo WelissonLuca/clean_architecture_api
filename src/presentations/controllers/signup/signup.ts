@@ -1,5 +1,5 @@
 import { MissingParamError, InvalidParamError } from '../../errors';
-import { badRequest, serverError } from '../../helpers/http';
+import { badRequest, serverError, ok } from '../../helpers/http';
 import {
   IAddAccount,
   IAddAccountModel,
@@ -42,12 +42,13 @@ export class SignupController implements IController {
         return badRequest(new InvalidParamError('email'));
       }
 
-      this.addAccount.add({
+      const account = this.addAccount.add({
         name,
         email,
         password,
       } as IAddAccountModel);
-      return {} as IHttpResponse;
+
+      return ok(account);
     } catch (error) {
       return serverError();
     }
