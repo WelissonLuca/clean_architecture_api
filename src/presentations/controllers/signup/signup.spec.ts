@@ -37,7 +37,7 @@ const makeAddAccount = (): IAddAccount => {
         password: 'valid_password',
       } as IAccountModel;
 
-      return fakeAccount;
+      return Promise.resolve(fakeAccount);
     }
   }
   return new AddAccountStub();
@@ -57,7 +57,7 @@ const makeSut = (): ISutTypes => {
 };
 
 describe('Signup Controller', () => {
-  it('should return 400 if no name is provided', () => {
+  it('should return 400 if no name is provided', async () => {
     const { sut } = makeSut();
 
     const httpRequest = {
@@ -68,13 +68,13 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('name'));
   });
 
-  it('should return 400 if no email is provided', () => {
+  it('should return 400 if no email is provided', async () => {
     const { sut } = makeSut();
 
     const httpRequest = {
@@ -85,13 +85,13 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('email'));
   });
 
-  it('should return 400 if no password is provided', () => {
+  it('should return 400 if no password is provided', async () => {
     const { sut } = makeSut();
 
     const httpRequest = {
@@ -102,13 +102,13 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('password'));
   });
 
-  it('should return 400 if no password confirmation is provided', () => {
+  it('should return 400 if no password confirmation is provided', async () => {
     const { sut } = makeSut();
 
     const httpRequest = {
@@ -119,7 +119,7 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(
@@ -127,7 +127,7 @@ describe('Signup Controller', () => {
     );
   });
 
-  it('should return 400 if no password confirmation is fails', () => {
+  it('should return 400 if no password confirmation is fails', async () => {
     const { sut } = makeSut();
 
     const httpRequest = {
@@ -139,7 +139,7 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(
@@ -147,7 +147,7 @@ describe('Signup Controller', () => {
     );
   });
 
-  it('should return 400 if an invalid email is provided', () => {
+  it('should return 400 if an invalid email is provided', async () => {
     const { sut, emailValidatorStub } = makeSut();
 
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false);
@@ -161,13 +161,13 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new InvalidParamError('email'));
   });
 
-  it('should call email valitor with correct email', () => {
+  it('should call email valitor with correct email', async () => {
     const { sut, emailValidatorStub } = makeSut();
 
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid');
@@ -181,12 +181,12 @@ describe('Signup Controller', () => {
       },
     };
 
-    sut.handle(httpRequest);
+    await sut.handle(httpRequest);
 
     expect(isValidSpy).toHaveBeenCalledWith('any email');
   });
 
-  it('should return 500 if email validator throws', () => {
+  it('should return 500 if email validator throws', async () => {
     const { sut, emailValidatorStub } = makeSut();
 
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -202,13 +202,13 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse.body).toEqual(new ServerError());
   });
 
-  it('should call AddAccount with correct values', () => {
+  it('should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut();
 
     const addSpy = jest.spyOn(addAccountStub, 'add');
@@ -222,7 +222,7 @@ describe('Signup Controller', () => {
       },
     };
 
-    sut.handle(httpRequest);
+    await sut.handle(httpRequest);
 
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any name',
@@ -231,7 +231,7 @@ describe('Signup Controller', () => {
     });
   });
 
-  it('should return 500 if addAccount throws', () => {
+  it('should return 500 if addAccount throws', async () => {
     const { sut, emailValidatorStub } = makeSut();
 
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -247,13 +247,13 @@ describe('Signup Controller', () => {
       },
     };
 
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse.body).toEqual(new ServerError());
   });
 
-  it('should return 200 if valid data is provided', () => {
+  it('should return 200 if valid data is provided', async () => {
     const { sut } = makeSut();
 
     const httpRequest = {
@@ -264,7 +264,7 @@ describe('Signup Controller', () => {
         passwordConfirmation: 'valid_password',
       },
     };
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(200);
   });
