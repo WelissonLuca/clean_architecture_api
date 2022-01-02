@@ -7,15 +7,19 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint 'src/**' --fix",
-    "test": "jest --passWithNoTests --silent --noStackTrace",
-    "test:unit": "npm test -- --watch",
-    "test:verbose": "jest --passWithNoTests",
-    "test:staged": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unit": "npm test -- --watch -c jest-unit.config.js",
+    "test:intregration": "npm test -- --watch -c jest-integration.config.js",
+    "test:staged": "npm test --findRelatedTests",
+    "test:ci": "npm test -- --coverage",
+    "pre-push": "git diff HEAD --quiet && npm run test:ci && npm run lint",
     "prepare": "husky install"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "git diff HEAD --quiet && npm run test:ci && npm run lint"
     }
   },
   "lint-staged": {

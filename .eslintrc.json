@@ -45,7 +45,8 @@
       "error",
       "ignorePackages",
       {
-        "ts": "never"
+        "ts": "never",
+        "js": "never"
       }
     ],
     "max-classes-per-file": "off",
