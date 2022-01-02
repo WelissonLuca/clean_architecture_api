@@ -40,6 +40,7 @@
     "no-console": "off",
     "no-useless-constructor": "off",
     "no-empty-function": "off",
+    "no-promise-executor-return": "off",
     "lines-between-class-members": "off",
     "import/extensions": [
       "error",
