@@ -40,7 +40,7 @@
     "@shelf/jest-mongodb": "^2.2.0",
     "@types/bcrypt": "^5.0.0",
     "@types/jest": "^27.0.2",
-    "@types/mongodb": "^4.0.7",
+    "@types/mongodb": "^3.5.34",
     "@types/node": "^16.11.7",
     "@types/validator": "^13.7.1",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "mongodb": "^4.2.2",
+    "mongodb": "^3.6.3",
     "prettier": "^2.4.1",
     "validator": "^13.7.0"
   }
