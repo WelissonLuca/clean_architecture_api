@@ -8,6 +8,4 @@ const app = express();
 setupMiddlewares(app);
 setupRoutes(app);
 
-console.log(setupRoutes(app));
-
 export default app;
