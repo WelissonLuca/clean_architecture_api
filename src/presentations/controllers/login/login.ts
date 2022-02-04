@@ -14,7 +14,11 @@ export class LoginController implements IController {
       return Promise.resolve(badRequest(new MissingParamError('password')));
     }
 
-    this.emailValidator.isValid(httpRequest.body.email);
+    const isValid = this.emailValidator.isValid(httpRequest.body.email);
+
+    if (!isValid) {
+      return Promise.resolve(badRequest(new MissingParamError('email')));
+    }
     return Promise.resolve(undefined);
   }
 }
