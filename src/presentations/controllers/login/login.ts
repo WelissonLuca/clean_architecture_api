@@ -5,6 +5,12 @@ import { IHttpResponse, IHttpRequest } from '../../protocols/http';
 
 export class LoginController implements IController {
   handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
-    return Promise.resolve(badRequest(new MissingParamError('email')));
+    if (!httpRequest.body.email) {
+      return Promise.resolve(badRequest(new MissingParamError('email')));
+    }
+    if (!httpRequest.body.password) {
+      return Promise.resolve(badRequest(new MissingParamError('password')));
+    }
+    return Promise.resolve(undefined);
   }
 }
