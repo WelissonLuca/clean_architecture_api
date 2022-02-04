@@ -50,6 +50,21 @@ describe('Login Controller', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('password')));
   });
 
+  it('Should return 400 if invalid email is provided', async () => {
+    const { sut, emailValidatoStub } = makeSut();
+    jest.spyOn(emailValidatoStub, 'isValid').mockReturnValueOnce(false);
+    const httpRequest = {
+      body: {
+        email: 'any_email',
+        password: 'any_password',
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('email')));
+  });
+
   it('Should call email validator with correct email', async () => {
     const { sut, emailValidatoStub } = makeSut();
     const isValidSpy = jest.spyOn(emailValidatoStub, 'isValid');
