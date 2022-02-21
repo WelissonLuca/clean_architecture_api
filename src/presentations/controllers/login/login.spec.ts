@@ -1,4 +1,5 @@
 /* eslint-disable new-cap */
+import { IAuthentication } from '../../../domain/useCases/authentication';
 import { MissingParamError } from '../../errors';
 import { badRequest, serverError } from '../../helpers/http';
 import { IEmailValidator } from '../../protocols/email-validator';
@@ -8,7 +9,18 @@ import { LoginController } from './login';
 interface ISutTypes {
   sut: LoginController;
   emailValidatoStub: IEmailValidator;
+  authenticationStub: IAuthentication;
 }
+
+const makeAuthentication = (): IAuthentication => {
+  class AuthenticationStub implements IAuthentication {
+    async auth(email: string, password: string): Promise<string> {
+      return Promise.resolve('any_token');
+    }
+  }
+  return new AuthenticationStub();
+};
+
 const makeEmailValidator = (): IEmailValidator => {
   class EmailValidatorStub implements IEmailValidator {
     isValid(email: string): boolean {
@@ -18,11 +30,13 @@ const makeEmailValidator = (): IEmailValidator => {
   return new EmailValidatorStub();
 };
 const makeSut = (): ISutTypes => {
+  const authenticationStub = makeAuthentication();
   const emailValidatoStub = makeEmailValidator();
-  const sut = new LoginController(emailValidatoStub);
+  const sut = new LoginController(emailValidatoStub, authenticationStub);
   return {
     sut,
     emailValidatoStub,
+    authenticationStub,
   };
 };
 
@@ -87,5 +101,14 @@ describe('Login Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
+  });
+
+  it('Should return 400 if no password is provided', async () => {
+    const { sut, authenticationStub } = makeSut();
+    const authSpy = jest.spyOn(authenticationStub, 'auth');
+
+    await sut.handle(makeFakeRequest());
+
+    expect(authSpy).toHaveBeenCalledWith('valid@gmail.com', 'valid_password');
   });
 });
