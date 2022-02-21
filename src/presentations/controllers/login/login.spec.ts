@@ -1,10 +1,12 @@
 /* eslint-disable new-cap */
-import { IAuthentication } from '../../../domain/useCases/authentication';
 import { InvalidParamError, MissingParamError } from '../../errors';
 import { badRequest, serverError, unauthorized } from '../../helpers/http';
-import { IEmailValidator } from '../../protocols/email-validator';
-import { IHttpRequest } from '../../protocols/http';
 import { LoginController } from './login';
+import {
+  IHttpRequest,
+  IEmailValidator,
+  IAuthentication,
+} from './login-protocols';
 
 interface ISutTypes {
   sut: LoginController;

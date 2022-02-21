@@ -1,9 +1,12 @@
-import { IAuthentication } from '../../../domain/useCases/authentication';
-import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest, ok, serverError, unauthorized } from '../../helpers/http';
-import { IController } from '../../protocols/controller';
-import { IHttpResponse, IHttpRequest } from '../../protocols/http';
-import { IEmailValidator } from '../signup/signup-protocols';
+import { MissingParamError, InvalidParamError } from '../../errors';
+import { badRequest, unauthorized, ok, serverError } from '../../helpers/http';
+import {
+  IHttpRequest,
+  IController,
+  IEmailValidator,
+  IAuthentication,
+  IHttpResponse,
+} from './login-protocols';
 
 export class LoginController implements IController {
   constructor(
