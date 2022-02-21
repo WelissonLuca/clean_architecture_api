@@ -1,5 +1,5 @@
 import { MissingParamError } from '../../errors';
-import { badRequest } from '../../helpers/http';
+import { badRequest, serverError } from '../../helpers/http';
 import { IController } from '../../protocols/controller';
 import { IHttpResponse, IHttpRequest } from '../../protocols/http';
 import { IEmailValidator } from '../signup/signup-protocols';
@@ -7,19 +7,23 @@ import { IEmailValidator } from '../signup/signup-protocols';
 export class LoginController implements IController {
   constructor(private readonly emailValidator: IEmailValidator) {}
   handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
-    const { email, password } = httpRequest.body;
-    if (!email) {
-      return Promise.resolve(badRequest(new MissingParamError('email')));
-    }
-    if (!password) {
-      return Promise.resolve(badRequest(new MissingParamError('password')));
-    }
+    try {
+      const { email, password } = httpRequest.body;
+      if (!email) {
+        return Promise.resolve(badRequest(new MissingParamError('email')));
+      }
+      if (!password) {
+        return Promise.resolve(badRequest(new MissingParamError('password')));
+      }
 
-    const isValid = this.emailValidator.isValid(email);
+      const isValid = this.emailValidator.isValid(email);
 
-    if (!isValid) {
-      return Promise.resolve(badRequest(new MissingParamError('email')));
+      if (!isValid) {
+        return Promise.resolve(badRequest(new MissingParamError('email')));
+      }
+      return Promise.resolve(undefined);
+    } catch (error) {
+      return Promise.resolve(serverError(error));
     }
-    return Promise.resolve(undefined);
   }
 }
