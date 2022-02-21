@@ -1,5 +1,6 @@
+/* eslint-disable new-cap */
 import { MissingParamError } from '../../errors';
-import { badRequest } from '../../helpers/http';
+import { badRequest, serverError } from '../../helpers/http';
 import { IEmailValidator } from '../../protocols/email-validator';
 import { IHttpRequest } from '../../protocols/http';
 import { LoginController } from './login';
@@ -75,5 +76,16 @@ describe('Login Controller', () => {
     await sut.handle(makeFakeRequest());
 
     expect(isValidSpy).toHaveBeenCalledWith('valid@gmail.com');
+  });
+
+  it('Should return 500 if email validator throws', async () => {
+    const { sut, emailValidatoStub } = makeSut();
+    jest.spyOn(emailValidatoStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error();
+    });
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 });
