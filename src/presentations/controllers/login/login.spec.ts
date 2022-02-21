@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 import { IAuthentication } from '../../../domain/useCases/authentication';
-import { MissingParamError } from '../../errors';
+import { InvalidParamError, MissingParamError } from '../../errors';
 import { badRequest, serverError } from '../../helpers/http';
 import { IEmailValidator } from '../../protocols/email-validator';
 import { IHttpRequest } from '../../protocols/http';
@@ -80,7 +80,7 @@ describe('Login Controller', () => {
 
     const httpResponse = await sut.handle(makeFakeRequest());
 
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('email')));
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('email')));
   });
 
   it('Should call email validator with correct email', async () => {

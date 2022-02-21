@@ -1,5 +1,5 @@
 import { IAuthentication } from '../../../domain/useCases/authentication';
-import { MissingParamError } from '../../errors';
+import { InvalidParamError, MissingParamError } from '../../errors';
 import { badRequest, ok, serverError } from '../../helpers/http';
 import { IController } from '../../protocols/controller';
 import { IHttpResponse, IHttpRequest } from '../../protocols/http';
@@ -13,23 +13,25 @@ export class LoginController implements IController {
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
     try {
       const { email, password } = httpRequest.body;
-      if (!email) {
-        return Promise.resolve(badRequest(new MissingParamError('email')));
-      }
-      if (!password) {
-        return Promise.resolve(badRequest(new MissingParamError('password')));
+
+      const requiredFields = ['email', 'password'];
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field));
+        }
       }
 
-      const isValid = this.emailValidator.isValid(email);
+      const isValid = await this.emailValidator.isValid(email);
 
       if (!isValid) {
-        return Promise.resolve(badRequest(new MissingParamError('email')));
+        return badRequest(new InvalidParamError('email'));
       }
+
       await this.authentication.auth(email, password);
 
-      return Promise.resolve(ok({}));
+      return ok({});
     } catch (error) {
-      return Promise.resolve(serverError(error));
+      return serverError(error);
     }
   }
 }
