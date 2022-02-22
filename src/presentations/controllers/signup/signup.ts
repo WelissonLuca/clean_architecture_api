@@ -7,16 +7,19 @@ import {
   IEmailValidator,
   IHttpRequest,
   IHttpResponse,
+  IValidation,
 } from './signup-protocols';
 
 export class SignupController implements IController {
   constructor(
     private readonly emailValidator: IEmailValidator,
-    private readonly addAccount: IAddAccount
+    private readonly addAccount: IAddAccount,
+    private readonly validation: IValidation
   ) {}
 
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
     try {
+      this.validation.validate(httpRequest.body);
       const requiredFields = [
         'name',
         'email',
