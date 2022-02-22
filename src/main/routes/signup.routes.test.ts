@@ -17,7 +17,7 @@ describe('Signup Routes', () => {
     await MongoHelper.disconnect();
   });
   test('should return an account on success', async () => {
-    await request(app)
+    const response = await request(app)
       .post('/api/signup/')
       .send({
         name: 'John Doe',
@@ -26,5 +26,7 @@ describe('Signup Routes', () => {
         passwordConfirmation: '123456',
       })
       .expect(200);
+
+    console.log(response);
   });
 });
