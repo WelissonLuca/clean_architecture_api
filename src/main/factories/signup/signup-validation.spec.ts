@@ -1,7 +1,9 @@
-import { CompareFieldsValidation } from '../../../presentations/helpers/validators/compare-fields-validation';
-import { EmailValidation } from '../../../presentations/helpers/validators/email-validation';
-import { RequiredFieldValidation } from '../../../presentations/helpers/validators/required-field-validation';
-import { ValidationComposite } from '../../../presentations/helpers/validators/validation-composite';
+import {
+  RequiredFieldValidation,
+  EmailValidation,
+  ValidationComposite,
+  CompareFieldsValidation,
+} from '../../../presentations/helpers/validators';
 import { IEmailValidator } from '../../../presentations/protocols/email-validator';
 import { IValidation } from '../../../presentations/protocols/validation';
 import { makeSignupValidation } from './signup-validation';
