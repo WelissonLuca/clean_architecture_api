@@ -1,4 +1,4 @@
-import { badRequest, serverError, ok } from '../../helpers/http';
+import { badRequest, serverError, ok } from '../../helpers/http/http';
 import {
   IAddAccount,
   IAddAccountModel,

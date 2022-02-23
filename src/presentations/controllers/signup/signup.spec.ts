@@ -1,5 +1,5 @@
 import { MissingParamError } from '../../errors';
-import { ok, badRequest } from '../../helpers/http';
+import { ok, badRequest } from '../../helpers/http/http';
 import { SignupController } from './signup';
 import {
   IAccountModel,

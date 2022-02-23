@@ -1,6 +1,11 @@
 /* eslint-disable new-cap */
 import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest, ok, serverError, unauthorized } from '../../helpers/http';
+import {
+  badRequest,
+  ok,
+  serverError,
+  unauthorized,
+} from '../../helpers/http/http';
 import { LoginController } from './login';
 import { IHttpRequest, IAuthentication, IValidation } from './login-protocols';
 
