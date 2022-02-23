@@ -7,7 +7,12 @@ import {
   unauthorized,
 } from '../../helpers/http/http';
 import { LoginController } from './login';
-import { IHttpRequest, IAuthentication, IValidation } from './login-protocols';
+import {
+  IHttpRequest,
+  IAuthentication,
+  IValidation,
+  IAuthenticationModel,
+} from './login-protocols';
 
 interface ISutTypes {
   sut: LoginController;
@@ -26,7 +31,7 @@ const makeValidation = (): IValidation => {
 
 const makeAuthentication = (): IAuthentication => {
   class AuthenticationStub implements IAuthentication {
-    async auth(email: string, password: string): Promise<string> {
+    async auth(authentication: IAuthenticationModel): Promise<string> {
       return Promise.resolve('any_token');
     }
   }
@@ -58,7 +63,10 @@ describe('Login Controller', () => {
 
     await sut.handle(makeFakeRequest());
 
-    expect(authSpy).toHaveBeenCalledWith('valid@gmail.com', 'valid_password');
+    expect(authSpy).toHaveBeenCalledWith({
+      email: 'valid@gmail.com',
+      password: 'valid_password',
+    });
   });
 
   it('Should return 400 if invalid credentials are provided', async () => {
