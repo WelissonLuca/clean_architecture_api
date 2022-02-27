@@ -3,5 +3,5 @@ export {
   IAddAccount,
   IAddAccountModel,
 } from '../../../domain/useCases/addAccount';
-export { IEncrypter } from '../../protocols/encrypter';
-export { IAddAccountRepository } from '../../protocols/add-account-repository';
+export { IEncrypter } from '../../protocols/cripthografy/encrypter';
+export { IAddAccountRepository } from '../../protocols/db/add-account-repository';
