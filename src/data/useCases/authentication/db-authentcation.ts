@@ -5,12 +5,14 @@ import {
 import { IHashCompare } from '../../protocols/cripthografy/hash-compare';
 import { ITokenGenerator } from '../../protocols/cripthografy/token-generator';
 import { ILoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository';
+import { IUpdateAcessTokenRepository } from '../../protocols/db/uodate-acess-token-repository';
 
 export class DbAuthentication implements IAuthentication {
   constructor(
     private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository,
     private readonly hashCompare: IHashCompare,
-    private readonly tokenGenerator: ITokenGenerator
+    private readonly tokenGenerator: ITokenGenerator,
+    private readonly updateAcessTokenRepository: IUpdateAcessTokenRepository
   ) {}
   async auth(authentication: IAuthenticationModel): Promise<string> {
     const account = await this.loadAccountByEmailRepository.load(
@@ -31,6 +33,8 @@ export class DbAuthentication implements IAuthentication {
     }
 
     const acessToken = await this.tokenGenerator.generate(account.id);
+
+    await this.updateAcessTokenRepository.update(account.id, acessToken);
 
     return acessToken;
   }
