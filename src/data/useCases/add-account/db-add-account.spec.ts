@@ -14,7 +14,7 @@ interface ISutTypes {
 
 const makeHasher = (): IHasher => {
   class HasherStub implements IHasher {
-    async hasher(value: string): Promise<string> {
+    async hash(value: string): Promise<string> {
       return new Promise((resolve) => resolve('hashed_password'));
     }
   }
@@ -57,19 +57,19 @@ const makeSut = (): ISutTypes => {
   };
 };
 describe('DbAddAccount UseCase', () => {
-  test('Should call Hasher with correct password', async () => {
+  test('Should call hash with correct password', async () => {
     const { sut, hasherStub } = makeSut();
-    const hasherSpy = jest.spyOn(hasherStub, 'hasher');
+    const hasherSpy = jest.spyOn(hasherStub, 'hash');
 
     await sut.add(makeAccountData());
 
     expect(hasherSpy).toHaveBeenCalledWith('valid_password');
   });
 
-  test('Should throw if Hasher throws', async () => {
+  test('Should throw if hash throws', async () => {
     const { sut, hasherStub } = makeSut();
     jest
-      .spyOn(hasherStub, 'hasher')
+      .spyOn(hasherStub, 'hash')
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       );

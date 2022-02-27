@@ -20,7 +20,7 @@ describe('Bcrypt Adapter', () => {
 
     const sut = makeSut();
 
-    await sut.hasher('any_value');
+    await sut.hash('any_value');
 
     expect(bcrypt.hash).toHaveBeenCalledWith('any_value', salt);
   });
@@ -28,7 +28,7 @@ describe('Bcrypt Adapter', () => {
   test('Should return a hash on success', async () => {
     const sut = makeSut();
 
-    const hash = await sut.hasher('any_value');
+    const hash = await sut.hash('any_value');
 
     expect(hash).toBe('any_hash');
   });
@@ -40,7 +40,7 @@ describe('Bcrypt Adapter', () => {
       .spyOn(bcrypt, 'hash')
       .mockRejectedValue(new Error('any_error') as never);
 
-    const promise = sut.hasher('any_value');
+    const promise = sut.hash('any_value');
 
     expect(promise).rejects.toThrow();
   });
