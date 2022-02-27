@@ -1,5 +1,5 @@
 export * from '../../protocols/cripthografy/hash-compare';
-export * from '../../protocols/cripthografy/token-generator';
+export * from '../../protocols/cripthografy/encrypter';
 export * from '../../protocols/db/load-account-by-email-repository';
 export * from '../../protocols/db/uodate-acess-token-repository';
 export * from '../../../domain/models/account';

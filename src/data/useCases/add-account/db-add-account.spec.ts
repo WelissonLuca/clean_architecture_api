@@ -2,18 +2,18 @@ import { DbAddAccount } from './db-add-account';
 import {
   IAccountModel,
   IAddAccountModel,
-  IEncrypter,
+  IHasher,
   IAddAccountRepository,
 } from './db-add-account-protocols';
 
 interface ISutTypes {
   sut: DbAddAccount;
-  encrypterStub: IEncrypter;
+  hasherStub: IHasher;
   addAccountRepositoryStub: IAddAccountRepository;
 }
 
-const makeEncrypter = (): IEncrypter => {
-  class HasherStub implements IEncrypter {
+const makeHasher = (): IHasher => {
+  class HasherStub implements IHasher {
     async hasher(value: string): Promise<string> {
       return new Promise((resolve) => resolve('hashed_password'));
     }
@@ -45,21 +45,21 @@ const makeAddAccountRepository = (): IAddAccountRepository => {
   return new AddAccountRepositoryStub();
 };
 const makeSut = (): ISutTypes => {
-  const encrypterStub = makeEncrypter();
+  const hasherStub = makeHasher();
   const addAccountRepositoryStub = makeAddAccountRepository();
 
-  const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub);
+  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub);
 
   return {
     sut,
-    encrypterStub,
+    hasherStub,
     addAccountRepositoryStub,
   };
 };
 describe('DbAddAccount UseCase', () => {
   test('Should call Hasher with correct password', async () => {
-    const { sut, encrypterStub } = makeSut();
-    const hasherSpy = jest.spyOn(encrypterStub, 'hasher');
+    const { sut, hasherStub } = makeSut();
+    const hasherSpy = jest.spyOn(hasherStub, 'hasher');
 
     await sut.add(makeAccountData());
 
@@ -67,9 +67,9 @@ describe('DbAddAccount UseCase', () => {
   });
 
   test('Should throw if Hasher throws', async () => {
-    const { sut, encrypterStub } = makeSut();
+    const { sut, hasherStub } = makeSut();
     jest
-      .spyOn(encrypterStub, 'hasher')
+      .spyOn(hasherStub, 'hasher')
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       );

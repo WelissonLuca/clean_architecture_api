@@ -3,7 +3,7 @@ import {
   IAuthenticationModel,
   IHashCompare,
   ILoadAccountByEmailRepository,
-  ITokenGenerator,
+  IEncrypter,
   IUpdateAcessTokenRepository,
 } from './db-authentication-protocols';
 
@@ -11,7 +11,7 @@ export class DbAuthentication implements IAuthentication {
   constructor(
     private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository,
     private readonly hashCompare: IHashCompare,
-    private readonly tokenGenerator: ITokenGenerator,
+    private readonly encrypter: IEncrypter,
     private readonly updateAcessTokenRepository: IUpdateAcessTokenRepository
   ) {}
   async auth(authentication: IAuthenticationModel): Promise<string> {
@@ -32,7 +32,7 @@ export class DbAuthentication implements IAuthentication {
       return null;
     }
 
-    const acessToken = await this.tokenGenerator.generate(account.id);
+    const acessToken = await this.encrypter.encrypt(account.id);
 
     await this.updateAcessTokenRepository.update(account.id, acessToken);
 
