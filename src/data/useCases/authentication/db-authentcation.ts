@@ -30,8 +30,8 @@ export class DbAuthentication implements IAuthentication {
       return null;
     }
 
-    await this.tokenGenerator.generate(account.id);
+    const acessToken = await this.tokenGenerator.generate(account.id);
 
-    return null;
+    return acessToken;
   }
 }

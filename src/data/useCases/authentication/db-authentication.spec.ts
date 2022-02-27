@@ -176,4 +176,12 @@ describe('DbAuthentication', () => {
 
     expect(promise).rejects.toThrow();
   });
+
+  it('should call token generator with correct id', async () => {
+    const { sut } = makeSut();
+
+    const acessToken = await sut.auth(makeFakeAuthentication());
+
+    expect(acessToken).toBe('any_token');
+  });
 });
