@@ -72,4 +72,15 @@ describe('DbAuthentication', () => {
 
     expect(promise).rejects.toThrow();
   });
+
+  it('should return null if load by email repository returns null', async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut();
+
+    jest
+      .spyOn(loadAccountByEmailRepositoryStub, 'load')
+      .mockReturnValueOnce(null);
+    const httpResponse = await sut.auth(makeFakeAuthentication());
+
+    expect(httpResponse).toBeNull();
+  });
 });
