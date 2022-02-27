@@ -13,13 +13,13 @@ interface ISutTypes {
 }
 
 const makeEncrypter = (): IEncrypter => {
-  class EncrypterStub implements IEncrypter {
-    async encrypt(value: string): Promise<string> {
+  class HasherStub implements IEncrypter {
+    async hasher(value: string): Promise<string> {
       return new Promise((resolve) => resolve('hashed_password'));
     }
   }
 
-  return new EncrypterStub();
+  return new HasherStub();
 };
 
 const makeFakeAccount = (): IAccountModel => ({
@@ -57,19 +57,19 @@ const makeSut = (): ISutTypes => {
   };
 };
 describe('DbAddAccount UseCase', () => {
-  test('Should call Encrypter with correct password', async () => {
+  test('Should call Hasher with correct password', async () => {
     const { sut, encrypterStub } = makeSut();
-    const encrypterSpy = jest.spyOn(encrypterStub, 'encrypt');
+    const hasherSpy = jest.spyOn(encrypterStub, 'hasher');
 
     await sut.add(makeAccountData());
 
-    expect(encrypterSpy).toHaveBeenCalledWith('valid_password');
+    expect(hasherSpy).toHaveBeenCalledWith('valid_password');
   });
 
-  test('Should throw if Encrypter throws', async () => {
+  test('Should throw if Hasher throws', async () => {
     const { sut, encrypterStub } = makeSut();
     jest
-      .spyOn(encrypterStub, 'encrypt')
+      .spyOn(encrypterStub, 'hasher')
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       );
