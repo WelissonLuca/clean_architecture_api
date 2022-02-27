@@ -19,7 +19,7 @@ export class DbAuthentication implements IAuthentication {
       return null;
     }
 
-    this.hashCompare.compare(authentication.password, account.password);
+    await this.hashCompare.compare(authentication.password, account.password);
 
     return account.password;
   }
