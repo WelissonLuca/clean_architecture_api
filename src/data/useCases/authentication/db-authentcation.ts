@@ -1,11 +1,11 @@
 import {
   IAuthentication,
   IAuthenticationModel,
-} from '../../../domain/useCases/authentication';
-import { IHashCompare } from '../../protocols/cripthografy/hash-compare';
-import { ITokenGenerator } from '../../protocols/cripthografy/token-generator';
-import { ILoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository';
-import { IUpdateAcessTokenRepository } from '../../protocols/db/uodate-acess-token-repository';
+  IHashCompare,
+  ILoadAccountByEmailRepository,
+  ITokenGenerator,
+  IUpdateAcessTokenRepository,
+} from './db-authentication-protocols';
 
 export class DbAuthentication implements IAuthentication {
   constructor(
