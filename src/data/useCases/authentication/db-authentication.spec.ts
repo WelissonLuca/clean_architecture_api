@@ -1,5 +1,6 @@
 import { IAuthenticationModel } from '../../../domain/useCases/authentication';
 import { IHashCompare } from '../../protocols/cripthografy/hash-compare';
+import { ITokenGenerator } from '../../protocols/cripthografy/token-generator';
 import { ILoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository';
 import { IAccountModel } from '../add-account/db-add-account-protocols';
 import { DbAuthentication } from './db-authentcation';
@@ -8,6 +9,7 @@ interface ISutTypes {
   sut: DbAuthentication;
   loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
   hashCompareStub: IHashCompare;
+  tokenGeneratorStub: ITokenGenerator;
 }
 const makeFakeAccount = (): IAccountModel =>
   ({
@@ -50,18 +52,31 @@ const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
   return new LoadAccountByEmailRepositoryStub();
 };
 
+const makeTokenGenerator = (): ITokenGenerator => {
+  class TokenGeneratorStub implements ITokenGenerator {
+    async generate(id: string): Promise<string> {
+      return new Promise((resolve) => resolve('any_token'));
+    }
+  }
+
+  return new TokenGeneratorStub();
+};
+
 const makeSut = (): ISutTypes => {
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository();
   const hashCompareStub = makeHashCompare();
+  const tokenGeneratorStub = makeTokenGenerator();
   const sut = new DbAuthentication(
     loadAccountByEmailRepositoryStub,
-    hashCompareStub
+    hashCompareStub,
+    tokenGeneratorStub
   );
 
   return {
     sut,
     loadAccountByEmailRepositoryStub,
     hashCompareStub,
+    tokenGeneratorStub,
   };
 };
 describe('DbAuthentication', () => {
@@ -136,5 +151,15 @@ describe('DbAuthentication', () => {
     const httpResponse = await sut.auth(makeFakeAuthentication());
 
     expect(httpResponse).toBeNull();
+  });
+
+  it('should call token generator with correct id', async () => {
+    const { sut, tokenGeneratorStub } = makeSut();
+
+    const generateSpy = jest.spyOn(tokenGeneratorStub, 'generate');
+
+    await sut.auth(makeFakeAuthentication());
+
+    expect(generateSpy).toHaveBeenCalledWith('any_id');
   });
 });
