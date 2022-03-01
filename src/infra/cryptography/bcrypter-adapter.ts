@@ -1,4 +1,4 @@
-import { hash, compare } from 'bcryptjs';
+import { hash, compare } from 'bcrypt';
 
 import { IHashCompare } from '../../data/protocols/cripthografy/hash-compare';
 import { IHasher } from '../../data/protocols/cripthografy/hasher';
