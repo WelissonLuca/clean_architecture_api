@@ -1,13 +1,13 @@
 import { MissingParamError } from '../../errors';
 import { ok, badRequest } from '../../helpers/http/http';
-import { SignupController } from './signup';
+import { SignupController } from './signup-controller';
 import {
   IAccountModel,
   IAddAccount,
   IAddAccountModel,
   IHttpRequest,
   IValidation,
-} from './signup-protocols';
+} from './signup-controller-protocols';
 
 interface ISutTypes {
   sut: SignupController;

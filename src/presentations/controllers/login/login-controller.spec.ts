@@ -6,13 +6,13 @@ import {
   serverError,
   unauthorized,
 } from '../../helpers/http/http';
-import { LoginController } from './login';
+import { LoginController } from './login-controller';
 import {
   IHttpRequest,
   IAuthentication,
   IValidation,
   IAuthenticationModel,
-} from './login-protocols';
+} from './login-controller-protocols';
 
 interface ISutTypes {
   sut: LoginController;

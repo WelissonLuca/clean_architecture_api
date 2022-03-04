@@ -6,7 +6,7 @@ import {
   IHttpRequest,
   IHttpResponse,
   IValidation,
-} from './signup-protocols';
+} from './signup-controller-protocols';
 
 export class SignupController implements IController {
   constructor(

@@ -1,5 +1,5 @@
-import { ILoadAccountByEmailRepository } from '../../../../data/protocols/db/load-account-by-email-repository';
-import { IUpdateAcessTokenRepository } from '../../../../data/protocols/db/uodate-acess-token-repository';
+import { ILoadAccountByEmailRepository } from '../../../../data/protocols/db/account/load-account-by-email-repository';
+import { IUpdateAcessTokenRepository } from '../../../../data/protocols/db/account/uodate-acess-token-repository';
 import { IAddAccountRepository } from '../../../../data/useCases/add-account/db-add-account-protocols';
 import { IAccountModel } from '../../../../domain/models/account';
 import { IAddAccountModel } from '../../../../domain/useCases/addAccount';

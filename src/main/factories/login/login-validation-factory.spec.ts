@@ -2,11 +2,10 @@ import {
   RequiredFieldValidation,
   EmailValidation,
   ValidationComposite,
-  CompareFieldsValidation,
 } from '../../../presentations/helpers/validators';
 import { IEmailValidator } from '../../../presentations/protocols/email-validator';
 import { IValidation } from '../../../presentations/protocols/validation';
-import { makeSignupValidation } from './signup-validation';
+import { makeLoginValidation } from './login-validation-factory';
 
 jest.mock('../../../presentations/helpers/validators/validation-composite');
 
@@ -18,18 +17,14 @@ const makeEmailValidator = (): IEmailValidator => {
   }
   return new EmailValidatorStub();
 };
-
 describe('SignupValidation factory', () => {
   test('Should call validation composite with all validations', () => {
-    makeSignupValidation();
+    makeLoginValidation();
     const validations: IValidation[] = [];
 
-    for (const field of ['name', 'email', 'password', 'passwordConfirmation']) {
+    for (const field of ['email', 'password']) {
       validations.push(new RequiredFieldValidation(field));
     }
-    validations.push(
-      new CompareFieldsValidation('password', 'passwordConfirmation')
-    );
 
     validations.push(new EmailValidation('email', makeEmailValidator()));
 
