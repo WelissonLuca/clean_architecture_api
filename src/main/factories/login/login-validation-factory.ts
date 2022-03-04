@@ -4,7 +4,7 @@ import {
   ValidationComposite,
 } from '../../../presentations/helpers/validators';
 import { IValidation } from '../../../presentations/protocols/validation';
-import { EmailValidatorAdapter } from '../../../utils/email-validator-adapter';
+import { EmailValidatorAdapter } from '../../adapters/validators/email-validator-adapter';
 
 export const makeLoginValidation = () => {
   const validations: IValidation[] = [];
