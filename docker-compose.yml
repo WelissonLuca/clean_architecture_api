@@ -23,4 +23,4 @@ services:
       environment: 
        - MONGO_URL=mongodb://mongo:27017/clean-node-api
        - JWT_SECRET=secret
-      
+       - PORT= 5050
