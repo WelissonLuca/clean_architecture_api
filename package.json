@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc",
-    "dev": "sucrase-node src/main/server.ts",
+    "up": "yarn build && docker-compose up -d",
+    "down": "docker-compose down",
     "lint": "eslint 'src/**' --fix",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
@@ -78,7 +79,6 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.3",
-    "sucrase": "^3.20.3",
     "validator": "^13.7.0"
   },
   "engines": {
