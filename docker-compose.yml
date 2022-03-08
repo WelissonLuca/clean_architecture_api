@@ -9,12 +9,11 @@ services:
     ports:
       - "27017:27017"
 
-    api: 
+  api: 
       container_name: api-container
       build: .
       image: clean-node-api
       restart: always
-      command: ["yarn", "start"]
       volumes: 
         - ./dist:/usr/src/clean-node-api/dist
       ports:
