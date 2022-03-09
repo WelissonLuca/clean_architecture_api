@@ -20,3 +20,8 @@ export const unauthorized = (): IHttpResponse => ({
   statusCode: 401,
   body: new UnauthorizedError(),
 });
+
+export const forbidden = (error: Error): IHttpResponse => ({
+  statusCode: 403,
+  body: error,
+});
