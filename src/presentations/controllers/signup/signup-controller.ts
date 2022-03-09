@@ -2,6 +2,7 @@ import { badRequest, serverError, ok } from '../../helpers/http/http';
 import {
   IAddAccount,
   IAddAccountModel,
+  IAuthentication,
   IController,
   IHttpRequest,
   IHttpResponse,
@@ -11,7 +12,8 @@ import {
 export class SignupController implements IController {
   constructor(
     private readonly addAccount: IAddAccount,
-    private readonly validation: IValidation
+    private readonly validation: IValidation,
+    private readonly authentication: IAuthentication
   ) {}
 
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
@@ -29,6 +31,11 @@ export class SignupController implements IController {
         email,
         password,
       } as IAddAccountModel);
+
+      await this.authentication.auth({
+        email,
+        password,
+      });
 
       return ok(account);
     } catch (error) {
