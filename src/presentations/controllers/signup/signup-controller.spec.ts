@@ -1,9 +1,9 @@
-import { MissingParamError } from '../../errors';
+import { EmailInUseError, MissingParamError } from '../../errors';
 import {
   ok,
   badRequest,
   serverError,
-  unauthorized,
+  forbidden,
 } from '../../helpers/http/http';
 import { SignupController } from './signup-controller';
 import {
@@ -98,6 +98,18 @@ describe('Signup Controller', () => {
       email: 'any email',
       password: 'any password',
     });
+  });
+
+  it('should return 403 if add account returns null', async () => {
+    const { sut, addAccountStub } = makeSut();
+
+    jest
+      .spyOn(addAccountStub, 'add')
+      .mockReturnValueOnce(Promise.resolve(null));
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(forbidden(new EmailInUseError()));
   });
 
   it('should return 200 if valid data is provided', async () => {
