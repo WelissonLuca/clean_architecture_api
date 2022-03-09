@@ -1,5 +1,10 @@
 import { MissingParamError } from '../../errors';
-import { ok, badRequest } from '../../helpers/http/http';
+import {
+  ok,
+  badRequest,
+  serverError,
+  unauthorized,
+} from '../../helpers/http/http';
 import { SignupController } from './signup-controller';
 import {
   IAccountModel,
@@ -139,5 +144,17 @@ describe('Signup Controller', () => {
       email: 'any email',
       password: 'any password',
     });
+  });
+  it('Should return 500 if authentication throws', async () => {
+    const { sut, authenticationStub } = makeSut();
+    jest
+      .spyOn(authenticationStub, 'auth')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      );
+
+    const httpResponse = await sut.handle(makeFakeRequest());
+
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 });
