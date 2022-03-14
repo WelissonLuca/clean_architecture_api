@@ -25,3 +25,8 @@ export const forbidden = (error: Error): IHttpResponse => ({
   statusCode: 403,
   body: error,
 });
+
+export const noContent = (): IHttpResponse => ({
+  statusCode: 204,
+  body: null,
+});
