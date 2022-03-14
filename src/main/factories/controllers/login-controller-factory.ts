@@ -1,4 +1,4 @@
-import { LoginController } from '../../../presentations/controllers/login/login-controller';
+import { LoginController } from '../../../presentations/controllers/login/login/login-controller';
 import { IController } from '../../../presentations/protocols/controller';
 import { makeLogControllerDecorator } from '../decorators/logger-controller-decorator-factory';
 import { makeLoginValidation } from '../login/login-validation-factory';

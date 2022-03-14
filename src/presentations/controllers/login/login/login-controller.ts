@@ -3,7 +3,7 @@ import {
   unauthorized,
   ok,
   serverError,
-} from '../../helpers/http/http';
+} from '../../../helpers/http/http';
 import {
   IHttpRequest,
   IController,
