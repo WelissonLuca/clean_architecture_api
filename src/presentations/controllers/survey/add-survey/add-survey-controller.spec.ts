@@ -1,14 +1,21 @@
 import { AddSurveyController } from './add-survey-controller';
-import { IHttpRequest } from './add-survey-controller-protocols';
+import { IHttpRequest, IValidation } from './add-survey-controller-protocols';
 
-class ValidationStub {
-  validate(input: any): Error {
-    return null;
-  }
+interface ISutTypes {
+  sut: AddSurveyController;
+  validationStub: IValidation;
 }
 
-const makeSut = (): any => {
-  const validationStub = new ValidationStub();
+const makeValidation = (): IValidation => {
+  class ValidationStub {
+    validate(input: any): Error {
+      return null;
+    }
+  }
+  return new ValidationStub();
+};
+const makeSut = (): ISutTypes => {
+  const validationStub = makeValidation();
   const sut = new AddSurveyController(validationStub);
   return {
     sut,
