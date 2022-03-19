@@ -5,14 +5,18 @@ interface ISutTypes {
   sut: DbLoadAccountByToken;
   decrypterStub: IDecrypter;
 }
-
-class DecrypterStub implements IDecrypter {
-  async decrypt(value: string): Promise<string> {
-    return new Promise((resolve) => resolve('any_value'));
+const makeDecrypter = (): IDecrypter => {
+  class DecrypterStub implements IDecrypter {
+    async decrypt(value: string): Promise<string> {
+      return new Promise((resolve) => resolve('any_value'));
+    }
   }
-}
+
+  return new DecrypterStub();
+};
+
 const makeSut = (): ISutTypes => {
-  const decrypterStub = new DecrypterStub();
+  const decrypterStub = makeDecrypter();
   const sut = new DbLoadAccountByToken(decrypterStub);
   return {
     sut,
