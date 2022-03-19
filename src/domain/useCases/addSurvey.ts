@@ -1,5 +1,5 @@
 export interface ISurveyAnswers {
-  image: string;
+  image?: string;
   answer: string;
 }
 
