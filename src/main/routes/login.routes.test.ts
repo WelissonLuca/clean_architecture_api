@@ -57,7 +57,7 @@ describe('Login Routes', () => {
         .post('/api/login/')
         .send({
           email: 'johndoe@email.com',
-          password: '123456',
+          password: '1234567',
         })
         .expect(401);
     });

@@ -27,7 +27,7 @@ export class AddSurveyController implements IController {
         answers,
       });
 
-      return noContent();
+      return new Promise((resolve) => resolve(noContent()));
     } catch (error) {
       return new Promise((resolve) => resolve(serverError(error)));
     }
