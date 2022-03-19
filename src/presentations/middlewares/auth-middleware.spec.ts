@@ -5,6 +5,11 @@ import { forbidden } from '../helpers/http/http';
 import { IHttpRequest } from '../protocols/http';
 import { AuthMiddleware } from './auth-middleware';
 
+interface ISutTypes {
+  sut: AuthMiddleware;
+  loadAccountByTokenStub: ILoadAccountByToken;
+}
+
 const makeFakeAccount = (): IAccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
@@ -12,15 +17,16 @@ const makeFakeAccount = (): IAccountModel => ({
   password: 'valid_password',
 });
 
+const makeFakeRequest = (): IHttpRequest => ({
+  headers: {
+    'x-access-token': 'any_token',
+  },
+});
+
 class LoadAccountByTokenStub implements ILoadAccountByToken {
   async load(accessToken: string, role?: string): Promise<IAccountModel> {
     return new Promise((resolve) => resolve(makeFakeAccount()));
   }
-}
-
-interface ISutTypes {
-  sut: AuthMiddleware;
-  loadAccountByTokenStub: LoadAccountByTokenStub;
 }
 
 const makeSut = (): ISutTypes => {
@@ -42,11 +48,7 @@ describe('Auth Middleware', () => {
   test('Should call load account by token with correct access token', async () => {
     const { sut, loadAccountByTokenStub } = makeSut();
     const loadSpy = jest.spyOn(loadAccountByTokenStub, 'load');
-    await sut.handle({
-      headers: {
-        'x-access-token': 'any_token',
-      },
-    });
+    await sut.handle(makeFakeRequest());
 
     expect(loadSpy).toHaveBeenCalledWith('any_token');
   });
