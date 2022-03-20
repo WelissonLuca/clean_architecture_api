@@ -20,7 +20,7 @@ describe('Survey Routes', () => {
   });
 
   describe('POST / Survey', () => {
-    test('should return 204 on survey', async () => {
+    test('should return 403 on add survey without accessToken', async () => {
       const response = await request(app)
         .post('/api/surveys')
         .send({
@@ -32,7 +32,7 @@ describe('Survey Routes', () => {
         })
         .set('header', 'Authorization');
 
-      expect(response.status).toBe(204);
+      expect(response.status).toBe(403);
     });
   });
 });
