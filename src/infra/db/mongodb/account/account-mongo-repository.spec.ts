@@ -87,4 +87,25 @@ describe('Mongo Repository', () => {
       expect(account.accessToken).toBe('any_token');
     });
   });
+
+  describe('loadByToken()', () => {
+    test('Should return an account on loadByToken withou role', async () => {
+      const sut = makeSut();
+
+      await accountCollection.insertOne({
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        accessToken: 'any_token',
+      });
+
+      const account = await sut.loadByToken('any_token');
+
+      expect(account).toBeTruthy();
+      expect(account.id).toBeTruthy();
+      expect(account.name).toBe('any_name');
+      expect(account.email).toBe('any_mail@mail.com');
+      expect(account.password).toBe('any_password');
+    });
+  });
 });
