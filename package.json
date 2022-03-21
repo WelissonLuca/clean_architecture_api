@@ -13,7 +13,7 @@
     "up": "yarn build && docker-compose up -d",
     "down": "docker-compose down",
     "lint": "eslint 'src/**' --fix",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --forceExit",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c ./jest-unit-config.js",
     "test:integration": "npm test -- --watch -c ./jest-integration-config.js",
