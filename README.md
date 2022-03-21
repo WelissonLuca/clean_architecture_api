@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/WelissonLuca/clean_architecture_api.svg?branch=main)](https://app.travis-ci.com/WelissonLuca/clean_architecture_api)
+
 # Clean Node TS API
 
 ## Casos de uso:
