@@ -1,5 +1,7 @@
 [![Build Status](https://app.travis-ci.com/WelissonLuca/clean_architecture_api.svg?branch=main)](https://app.travis-ci.com/WelissonLuca/clean_architecture_api)
 
+[![Coverage Status](https://coveralls.io/repos/github/WelissonLuca/clean_architecture_api/badge.svg?branch=main)](https://coveralls.io/github/WelissonLuca/clean_architecture_api?branch=main)
+
 # Clean Node TS API
 
 ## Casos de uso:
