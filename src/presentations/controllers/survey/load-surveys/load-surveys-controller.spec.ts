@@ -4,6 +4,7 @@ import { LoadSurveyController } from './load-surveys-controller';
 import {
   ISurveyModel,
   ILoadSurveys,
+  ok,
 } from './load-surveys-controller-protocols';
 
 interface ISutTypes {
@@ -38,7 +39,7 @@ const makeFakeSurveys = (): ISurveyModel[] => [
 const makeLoadSurveysStub = (): ILoadSurveys => {
   class LoadSurveysStub implements ILoadSurveys {
     async load(): Promise<ISurveyModel[]> {
-      return new Promise((resolve) => resolve([]));
+      return new Promise((resolve) => resolve(makeFakeSurveys()));
     }
   }
 
@@ -67,5 +68,13 @@ describe('LoadSurveys Controller', () => {
     sut.handle({});
 
     expect(loadSpy).toHaveBeenCalled();
+  });
+
+  test('should return 200 on success', async () => {
+    const { sut } = makeSut();
+
+    const httpResponse = await sut.handle({});
+
+    expect(httpResponse).toEqual(ok(makeFakeSurveys()));
   });
 });
