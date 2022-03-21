@@ -25,6 +25,7 @@ export class AddSurveyController implements IController {
       await this.addSurvey.add({
         question,
         answers,
+        date: new Date(),
       });
 
       return new Promise((resolve) => resolve(noContent()));
