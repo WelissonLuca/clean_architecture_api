@@ -1,5 +1,6 @@
-import { ISurveyModel } from '../../../domain/models/survey';
-import { ILoadSurveys } from '../../../domain/useCases/load-surveys';
+import { ISurveyModel } from '@domain/models/survey';
+import { ILoadSurveys } from '@domain/useCases/load-surveys';
+
 import { ILoadSurveysRepository } from '../../protocols/db/survey/load-survey-repository';
 
 export class DbLoadSurveys implements ILoadSurveys {

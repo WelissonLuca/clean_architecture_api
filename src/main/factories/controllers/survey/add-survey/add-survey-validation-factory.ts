@@ -2,7 +2,7 @@ import {
   IValidation,
   RequiredFieldValidation,
   ValidationComposite,
-} from '../../../../../validation/validators';
+} from '@validation/validators';
 
 export const makeAddSurveyValidation = () => {
   const validations: IValidation[] = [];

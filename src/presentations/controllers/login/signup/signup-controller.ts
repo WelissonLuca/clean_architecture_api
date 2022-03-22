@@ -1,10 +1,11 @@
-import { EmailInUseError } from '../../../errors/email-in-use-error';
+import { EmailInUseError } from '@presentations/errors/email-in-use-error';
 import {
   badRequest,
   serverError,
   ok,
   forbidden,
-} from '../../../helpers/http/http';
+} from '@presentations/helpers/http/http';
+
 import {
   IAddAccount,
   IAddAccountModel,

@@ -1,4 +1,5 @@
-import { MissingParamError } from '../../presentations/errors';
+import { MissingParamError } from '@presentations/errors';
+
 import { ValidationComposite, IValidation } from './index';
 
 interface ISutTypes {

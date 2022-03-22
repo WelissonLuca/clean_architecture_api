@@ -1,4 +1,9 @@
-import { badRequest, serverError, noContent } from '../../../helpers/http/http';
+import {
+  badRequest,
+  serverError,
+  noContent,
+} from '@presentations/helpers/http/http';
+
 import {
   IController,
   IHttpRequest,

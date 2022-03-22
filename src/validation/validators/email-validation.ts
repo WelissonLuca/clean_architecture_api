@@ -1,4 +1,5 @@
-import { InvalidParamError } from '../../presentations/errors';
+import { InvalidParamError } from '@presentations/errors';
+
 import { IEmailValidator } from '../protocols/email-validator';
 import { IValidation } from './index';
 

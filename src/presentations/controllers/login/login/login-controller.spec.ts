@@ -1,10 +1,11 @@
-import { MissingParamError } from '../../../errors';
+import { MissingParamError } from '@presentations/errors';
 import {
   badRequest,
   ok,
   serverError,
   unauthorized,
-} from '../../../helpers/http/http';
+} from '@presentations/helpers/http/http';
+
 import { LoginController } from './login-controller';
 import {
   IHttpRequest,

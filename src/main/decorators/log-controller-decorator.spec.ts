@@ -1,11 +1,12 @@
-import { ILogErrorRepository } from '../../data/protocols/db/log/log-error-repository';
-import { IAccountModel } from '../../domain/models/account';
-import { serverError, ok } from '../../presentations/helpers/http/http';
+import { ILogErrorRepository } from '@data/protocols/db/log/log-error-repository';
+import { IAccountModel } from '@domain/models/account';
+import { serverError, ok } from '@presentations/helpers/http/http';
 import {
   IController,
   IHttpRequest,
   IHttpResponse,
-} from '../../presentations/protocols';
+} from '@presentations/protocols';
+
 import { LogControllerDecorator } from './log-controller-decorator';
 
 interface ISutTypes {

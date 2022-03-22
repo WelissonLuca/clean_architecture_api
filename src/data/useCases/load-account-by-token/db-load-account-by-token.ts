@@ -1,4 +1,5 @@
-import { IAccountModel } from '../../../domain/models/account';
+import { IAccountModel } from '@domain/models/account';
+
 import { IDecrypter } from '../../protocols/cripthografy/decrypter';
 import { ILoadAccountByTokenRepository } from '../../protocols/db/account/load-account-by-token-repository';
 

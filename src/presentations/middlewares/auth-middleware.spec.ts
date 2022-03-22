@@ -1,4 +1,5 @@
-import { IAccountModel } from '../../domain/models/account';
+import { IAccountModel } from '@domain/models/account';
+
 import { AuthMiddleware } from './auth-middleware';
 import {
   IHttpRequest,
