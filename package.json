@@ -1,6 +1,6 @@
 {
   "name": "clean_architecture_api",
-  "version": "2.0.1",
+  "version": "2.2.0",
   "main": "index.js",
   "repository": "git@github.com:WelissonLuca/clean_architecture_api.git",
   "author": "Welisson luca <welissonluca17@gmail.com>",
