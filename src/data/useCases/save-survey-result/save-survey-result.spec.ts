@@ -69,9 +69,14 @@ describe('DbSaveSurvey UseCase', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       );
-
     const promise = sut.save(surveyResultData());
-
     expect(promise).rejects.toThrow();
+  });
+
+  it('Should return save result on success', async () => {
+    const { sut } = makeSut();
+
+    const surveyResult = await sut.save(surveyResultData());
+    expect(surveyResult).toEqual(makeFakeSurveyResultData());
   });
 });
