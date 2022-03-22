@@ -1,7 +1,7 @@
 import {
   IController,
-  IHttpResponse,
-  IHttpRequest,
+  HttpResponse,
+  HttpRequest,
   ILoadSurveys,
   ok,
   noContent,
@@ -10,7 +10,7 @@ import {
 
 export class LoadSurveyController implements IController {
   constructor(private readonly loadSurveys: ILoadSurveys) {}
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const surveys = await this.loadSurveys.load();
 

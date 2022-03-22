@@ -8,17 +8,17 @@ import {
 
 import { LoginController } from './login-controller';
 import {
-  IHttpRequest,
+  HttpRequest,
   IAuthentication,
   IValidation,
   IAuthenticationModel,
 } from './login-controller-protocols';
 
-interface ISutTypes {
+type SutTypes = {
   sut: LoginController;
   authenticationStub: IAuthentication;
   validationStub: IValidation;
-}
+};
 
 const makeValidation = (): IValidation => {
   class ValidationStub implements IValidation {
@@ -38,7 +38,7 @@ const makeAuthentication = (): IAuthentication => {
   return new AuthenticationStub();
 };
 
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const authenticationStub = makeAuthentication();
   const validationStub = makeValidation();
   const sut = new LoginController(authenticationStub, validationStub);
@@ -49,7 +49,7 @@ const makeSut = (): ISutTypes => {
   };
 };
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     email: 'valid@gmail.com',
     password: 'valid_password',

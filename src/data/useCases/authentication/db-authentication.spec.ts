@@ -1,6 +1,6 @@
 import { DbAuthentication } from './db-authentcation';
 import {
-  IAccountModel,
+  AccountModel,
   IAuthenticationModel,
   IHashCompare,
   ILoadAccountByEmailRepository,
@@ -8,20 +8,20 @@ import {
   IUpdateAcessTokenRepository,
 } from './db-authentication-protocols';
 
-interface ISutTypes {
+type SutTypes = {
   sut: DbAuthentication;
   loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
   hashCompareStub: IHashCompare;
   encrypterStub: IEncrypter;
   updateAcessTokenRepositoryStub: IUpdateAcessTokenRepository;
-}
-const makeFakeAccount = (): IAccountModel =>
+};
+const makeFakeAccount = (): AccountModel =>
   ({
     id: 'any_id',
     name: 'any_name',
     email: 'any_email@mail.com',
     password: 'hashed_password',
-  } as IAccountModel);
+  } as AccountModel);
 
 const makeFakeAuthentication = (): IAuthenticationModel =>
   ({
@@ -42,8 +42,8 @@ const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub
     implements ILoadAccountByEmailRepository
   {
-    async loadByEmail(email: string): Promise<IAccountModel> {
-      const account: IAccountModel = {
+    async loadByEmail(email: string): Promise<AccountModel> {
+      const account: AccountModel = {
         id: 'any_id',
         name: 'any_name',
         email: 'any_email@mail.com',
@@ -76,7 +76,7 @@ const makeupdateAcessTokenRepositoryStub = (): IUpdateAcessTokenRepository => {
   return new UpdateAcessTokenRepositoryStub();
 };
 
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository();
   const hashCompareStub = makeHashCompare();
   const encrypterStub = makeEncrypter();

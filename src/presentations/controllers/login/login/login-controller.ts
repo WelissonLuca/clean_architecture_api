@@ -6,10 +6,10 @@ import {
 } from '@presentations/helpers/http/http';
 
 import {
-  IHttpRequest,
+  HttpRequest,
   IController,
   IAuthentication,
-  IHttpResponse,
+  HttpResponse,
   IValidation,
 } from './login-controller-protocols';
 
@@ -18,7 +18,7 @@ export class LoginController implements IController {
     private readonly authentication: IAuthentication,
     private readonly validation: IValidation
   ) {}
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { email, password } = httpRequest.body;
 

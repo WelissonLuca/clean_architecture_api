@@ -2,8 +2,8 @@ import { ILoadAccountByEmailRepository } from '@data/protocols/db/account/load-a
 import { ILoadAccountByTokenRepository } from '@data/protocols/db/account/load-account-by-token-repository';
 import { IUpdateAcessTokenRepository } from '@data/protocols/db/account/uodate-acess-token-repository';
 import { IAddAccountRepository } from '@data/useCases/add-account/db-add-account-protocols';
-import { IAccountModel } from '@domain/models/account';
-import { IAddAccountModel } from '@domain/useCases/addAccount';
+import { AccountModel } from '@domain/models/account';
+import { AddAccountModel } from '@domain/useCases/addAccount';
 
 import { MongoHelper } from '../helpers/mongo-helper';
 
@@ -14,7 +14,7 @@ export class AccountMongoRepository
     IUpdateAcessTokenRepository,
     ILoadAccountByTokenRepository
 {
-  async add(accountData: IAddAccountModel): Promise<IAccountModel> {
+  async add(accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
 
     const result = await accountCollection.insertOne(accountData);
@@ -22,7 +22,7 @@ export class AccountMongoRepository
     return MongoHelper.map(result.ops[0]);
   }
 
-  async loadByEmail(email: string): Promise<IAccountModel> {
+  async loadByEmail(email: string): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     console.log(email);
 
@@ -43,7 +43,7 @@ export class AccountMongoRepository
     );
   }
 
-  async loadByToken(token: string, role?: string): Promise<IAccountModel> {
+  async loadByToken(token: string, role?: string): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
 
     const account = await accountCollection.findOne({

@@ -1,8 +1,8 @@
 import {
-  IAddAccountModel,
-  IAccountModel,
+  AddAccountModel,
+  AccountModel,
 } from '@data/useCases/add-account/db-add-account-protocols';
 
 export interface IAddAccountRepository {
-  add(accountData: IAddAccountModel): Promise<IAccountModel>;
+  add(accountData: AddAccountModel): Promise<AccountModel>;
 }

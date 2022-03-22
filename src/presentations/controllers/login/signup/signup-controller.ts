@@ -8,11 +8,11 @@ import {
 
 import {
   IAddAccount,
-  IAddAccountModel,
+  AddAccountModel,
   IAuthentication,
   IController,
-  IHttpRequest,
-  IHttpResponse,
+  HttpRequest,
+  HttpResponse,
   IValidation,
 } from './signup-controller-protocols';
 
@@ -23,7 +23,7 @@ export class SignupController implements IController {
     private readonly authentication: IAuthentication
   ) {}
 
-  async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const error = this.validation.validate(httpRequest.body);
 
@@ -37,7 +37,7 @@ export class SignupController implements IController {
         name,
         email,
         password,
-      } as IAddAccountModel);
+      } as AddAccountModel);
 
       if (!account) {
         return forbidden(new EmailInUseError());

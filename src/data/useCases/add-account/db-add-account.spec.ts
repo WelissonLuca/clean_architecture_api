@@ -1,18 +1,18 @@
 import { DbAddAccount } from './db-add-account';
 import {
-  IAccountModel,
-  IAddAccountModel,
+  AccountModel,
+  AddAccountModel,
   IHasher,
   IAddAccountRepository,
   ILoadAccountByEmailRepository,
 } from './db-add-account-protocols';
 
-interface ISutTypes {
+type SutTypes = {
   sut: DbAddAccount;
   hasherStub: IHasher;
   addAccountRepositoryStub: IAddAccountRepository;
   loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository;
-}
+};
 
 const makeHasher = (): IHasher => {
   class HasherStub implements IHasher {
@@ -24,14 +24,14 @@ const makeHasher = (): IHasher => {
   return new HasherStub();
 };
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@email.com',
   password: 'valid_password',
 });
 
-const makeAccountData = (): IAddAccountModel => ({
+const makeAccountData = (): AddAccountModel => ({
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password',
@@ -39,7 +39,7 @@ const makeAccountData = (): IAddAccountModel => ({
 
 const makeAddAccountRepository = (): IAddAccountRepository => {
   class AddAccountRepositoryStub implements IAddAccountRepository {
-    async add(accountData: IAddAccountModel): Promise<IAccountModel> {
+    async add(accountData: AddAccountModel): Promise<AccountModel> {
       return new Promise((resolve) => resolve(makeFakeAccount()));
     }
   }
@@ -51,7 +51,7 @@ const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub
     implements ILoadAccountByEmailRepository
   {
-    async loadByEmail(email: string): Promise<IAccountModel> {
+    async loadByEmail(email: string): Promise<AccountModel> {
       return new Promise((resolve) => resolve(null));
     }
   }
@@ -59,7 +59,7 @@ const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
   return new LoadAccountByEmailRepositoryStub();
 };
 
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository();
   const hasherStub = makeHasher();
   const addAccountRepositoryStub = makeAddAccountRepository();

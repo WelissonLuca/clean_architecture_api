@@ -1,5 +1,5 @@
-import { ISurveyModel } from '../models/survey';
+import { SurveyModel } from '../models/survey';
 
 export interface ILoadSurveys {
-  load(): Promise<ISurveyModel[]>;
+  load(): Promise<SurveyModel[]>;
 }

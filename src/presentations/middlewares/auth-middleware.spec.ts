@@ -1,8 +1,8 @@
-import { IAccountModel } from '@domain/models/account';
+import { AccountModel } from '@domain/models/account';
 
 import { AuthMiddleware } from './auth-middleware';
 import {
-  IHttpRequest,
+  HttpRequest,
   ILoadAccountByToken,
   ok,
   forbidden,
@@ -10,31 +10,31 @@ import {
   serverError,
 } from './auth-middleware-protocols';
 
-interface ISutTypes {
+type SutTypes = {
   sut: AuthMiddleware;
   loadAccountByTokenStub: ILoadAccountByToken;
-}
+};
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@email.com',
   password: 'valid_password',
 });
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   headers: {
     'x-access-token': 'any_token',
   },
 });
 
 class LoadAccountByTokenStub implements ILoadAccountByToken {
-  async load(accessToken: string, role?: string): Promise<IAccountModel> {
+  async load(accessToken: string, role?: string): Promise<AccountModel> {
     return new Promise((resolve) => resolve(makeFakeAccount()));
   }
 }
 
-const makeSut = (role?: string): ISutTypes => {
+const makeSut = (role?: string): SutTypes => {
   const loadAccountByTokenStub = new LoadAccountByTokenStub();
   const authMiddleware = new AuthMiddleware(loadAccountByTokenStub, role);
   return {
@@ -42,7 +42,7 @@ const makeSut = (role?: string): ISutTypes => {
     loadAccountByTokenStub,
   };
 };
-describe('Auth Middleware', () => {
+describe('Auth IMiddleware', () => {
   test('Should return 403 if no x-access-token exists in headers', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle({});

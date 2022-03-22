@@ -2,19 +2,19 @@ import mockDate from 'mockdate';
 
 import { LoadSurveyController } from './load-surveys-controller';
 import {
-  ISurveyModel,
+  SurveyModel,
   ILoadSurveys,
   ok,
   serverError,
   noContent,
 } from './load-surveys-controller-protocols';
 
-interface ISutTypes {
+type SutTypes = {
   sut: LoadSurveyController;
   loadSurveysStub: ILoadSurveys;
-}
+};
 
-const makeFakeSurveys = (): ISurveyModel[] => [
+const makeFakeSurveys = (): SurveyModel[] => [
   {
     id: 'any_id',
     question: 'any_question',
@@ -40,14 +40,14 @@ const makeFakeSurveys = (): ISurveyModel[] => [
 ];
 const makeLoadSurveysStub = (): ILoadSurveys => {
   class LoadSurveysStub implements ILoadSurveys {
-    async load(): Promise<ISurveyModel[]> {
+    async load(): Promise<SurveyModel[]> {
       return new Promise((resolve) => resolve(makeFakeSurveys()));
     }
   }
 
   return new LoadSurveysStub();
 };
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const loadSurveysStub = makeLoadSurveysStub();
   const sut = new LoadSurveyController(loadSurveysStub);
   return {

@@ -1,21 +1,21 @@
 import { ILogErrorRepository } from '@data/protocols/db/log/log-error-repository';
-import { IAccountModel } from '@domain/models/account';
+import { AccountModel } from '@domain/models/account';
 import { serverError, ok } from '@presentations/helpers/http/http';
 import {
   IController,
-  IHttpRequest,
-  IHttpResponse,
+  HttpRequest,
+  HttpResponse,
 } from '@presentations/protocols';
 
 import { LogControllerDecorator } from './log-controller-decorator';
 
-interface ISutTypes {
+type SutTypes = {
   sut: LogControllerDecorator;
   controllerStub: IController;
   logErrorRepositoryStub: ILogErrorRepository;
-}
+};
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@email.com',
@@ -33,15 +33,15 @@ const makeLogErrorRepository = (): ILogErrorRepository => {
 
 const makeController = (): IController => {
   class ControllerStub implements IController {
-    async handle(): Promise<IHttpResponse> {
-      const httpResponse: IHttpResponse = ok(makeFakeAccount());
+    async handle(): Promise<HttpResponse> {
+      const httpResponse: HttpResponse = ok(makeFakeAccount());
       return new Promise((resolve) => resolve(httpResponse));
     }
   }
   return new ControllerStub();
 };
 
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const controllerStub = makeController();
   const logErrorRepositoryStub = makeLogErrorRepository();
   const sut = new LogControllerDecorator(
@@ -56,7 +56,7 @@ const makeSut = (): ISutTypes => {
   };
 };
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
     email: 'any@gmail.com',
@@ -65,7 +65,7 @@ const makeFakeRequest = (): IHttpRequest => ({
   },
 });
 
-const makeFakeServer = (): IHttpResponse => {
+const makeFakeServer = (): HttpResponse => {
   const fakeError = new Error();
   fakeError.stack = 'any_stack';
   const error = serverError(fakeError);

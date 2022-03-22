@@ -8,16 +8,16 @@ import {
 
 import { AddSurveyController } from './add-survey-controller';
 import {
-  IHttpRequest,
+  HttpRequest,
   IValidation,
   IAddSurvey,
 } from './add-survey-controller-protocols';
 
-interface ISutTypes {
+type SutTypes = {
   sut: AddSurveyController;
   validationStub: IValidation;
   addSurveyStub: IAddSurvey;
-}
+};
 
 const makeValidation = (): IValidation => {
   class ValidationStub {
@@ -36,7 +36,7 @@ const makeAddSurveyStub = (): IAddSurvey => {
   }
   return new AddSurveyStub();
 };
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const validationStub = makeValidation();
   const addSurveyStub = makeAddSurveyStub();
   const sut = new AddSurveyController(validationStub, addSurveyStub);
@@ -47,7 +47,7 @@ const makeSut = (): ISutTypes => {
   };
 };
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     question: 'any_question',
     answers: [

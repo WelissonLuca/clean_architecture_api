@@ -8,21 +8,21 @@ import {
 
 import { SignupController } from './signup-controller';
 import {
-  IAccountModel,
+  AccountModel,
   IAddAccount,
-  IAddAccountModel,
-  IHttpRequest,
+  AddAccountModel,
+  HttpRequest,
   IValidation,
   IAuthentication,
   IAuthenticationModel,
 } from './signup-controller-protocols';
 
-interface ISutTypes {
+type SutTypes = {
   sut: SignupController;
   addAccountStub: IAddAccount;
   validationStub: IValidation;
   authenticationStub: IAuthentication;
-}
+};
 
 const makeValidation = (): IValidation => {
   class ValidationStub implements IValidation {
@@ -33,7 +33,7 @@ const makeValidation = (): IValidation => {
   return new ValidationStub();
 };
 
-const makeFakeAccount = (): IAccountModel => ({
+const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
   email: 'valid_email@email.com',
@@ -42,7 +42,7 @@ const makeFakeAccount = (): IAccountModel => ({
 
 const makeAddAccount = (): IAddAccount => {
   class AddAccountStub implements IAddAccount {
-    async add(account: IAddAccountModel): Promise<IAccountModel> {
+    async add(account: AddAccountModel): Promise<AccountModel> {
       return Promise.resolve(makeFakeAccount());
     }
   }
@@ -58,7 +58,7 @@ const makeAuthentication = (): IAuthentication => {
   return new AuthenticationStub();
 };
 
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const addAccountStub = makeAddAccount();
   const validationStub = makeValidation();
   const authenticationStub = makeAuthentication();
@@ -77,7 +77,7 @@ const makeSut = (): ISutTypes => {
   };
 };
 
-const makeFakeRequest = (): IHttpRequest => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any name',
     email: 'any email',
