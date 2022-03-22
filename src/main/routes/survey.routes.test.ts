@@ -8,6 +8,28 @@ import env from '../config/env';
 
 let surveyCollection: Collection;
 let accountCollection: Collection;
+
+const makeAccessToken = async (): Promise<string> => {
+  const res = await accountCollection.insertOne({
+    name: 'John Doe',
+    email: 'valid@mail.com',
+    password: '123456',
+    role: 'admin',
+  });
+
+  const id = res.ops[0]._id;
+  const accessToken = sign({ id }, env.jwtSecret);
+  await accountCollection.updateOne(
+    { _id: id },
+    {
+      $set: {
+        accessToken,
+      },
+    }
+  );
+
+  return accessToken;
+};
 describe('Survey Routes', () => {
   beforeEach(async () => {
     await MongoHelper.connect(process.env.MONGO_URL);
@@ -39,23 +61,7 @@ describe('Survey Routes', () => {
     });
 
     test('should return 204 on add survey with valid token', async () => {
-      const res = await accountCollection.insertOne({
-        name: 'John Doe',
-        email: 'valid@mail.com',
-        password: '123456',
-        role: 'admin',
-      });
-
-      const id = res.ops[0]._id;
-      const accessToken = sign({ id }, env.jwtSecret);
-      await accountCollection.updateOne(
-        { _id: id },
-        {
-          $set: {
-            accessToken,
-          },
-        }
-      );
+      const accessToken = await makeAccessToken();
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -76,57 +82,13 @@ describe('Survey Routes', () => {
     });
   });
 
-  test('should return 200 on load surveys with valid token', async () => {
-    await surveyCollection.insertMany([
-      {
-        question: 'any_question',
-        answers: [
-          {
-            image: 'any_image',
-            answer: 'any_answer',
-          },
-          {
-            answer: 'any_answer',
-          },
-        ],
-        date: new Date(),
-      },
-      {
-        question: 'other_question',
-        answers: [
-          {
-            image: 'other_image',
-            answer: 'other_answer',
-          },
-          {
-            answer: 'other_answer',
-          },
-        ],
-        date: new Date(),
-      },
-    ]);
-
-    const res = await accountCollection.insertOne({
-      name: 'John Doe',
-      email: 'valid@mail.com',
-      password: '123456',
-    });
-
-    const id = res.ops[0]._id;
-    const accessToken = sign({ id }, env.jwtSecret);
-    await accountCollection.updateOne(
-      { _id: id },
-      {
-        $set: {
-          accessToken,
-        },
-      }
-    );
+  test('should return 204 on load surveys with valid token', async () => {
+    const accessToken = await makeAccessToken();
 
     await request(app)
       .get('/api/surveys')
       .set('x-access-token', accessToken)
       .send()
-      .expect(200);
+      .expect(204);
   });
 });
