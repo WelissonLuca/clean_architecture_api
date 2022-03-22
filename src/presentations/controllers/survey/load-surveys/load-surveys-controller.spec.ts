@@ -5,6 +5,7 @@ import {
   ISurveyModel,
   ILoadSurveys,
   ok,
+  serverError,
 } from './load-surveys-controller-protocols';
 
 interface ISutTypes {
@@ -76,5 +77,18 @@ describe('LoadSurveys Controller', () => {
     const httpResponse = await sut.handle({});
 
     expect(httpResponse).toEqual(ok(makeFakeSurveys()));
+  });
+
+  test('should return 500 if LoadSurveys throws', async () => {
+    const { sut, loadSurveysStub } = makeSut();
+    jest
+      .spyOn(loadSurveysStub, 'load')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      );
+
+    const httpResponse = await sut.handle({});
+
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 });
