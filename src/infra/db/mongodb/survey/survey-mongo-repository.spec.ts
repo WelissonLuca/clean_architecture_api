@@ -84,6 +84,7 @@ describe('Mongo Repository', () => {
       expect(surveys.length).toBe(2);
       expect(surveys[0].question).toBe('any_question');
       expect(surveys[1].question).toBe('other_question');
+      expect(surveys[0].id).toBeTruthy();
     });
 
     test('Should load empty list', async () => {
@@ -114,6 +115,7 @@ describe('Mongo Repository', () => {
       const surveys = await sut.loadById(res.ops[0]._id);
 
       expect(surveys).toBeTruthy();
+      expect(surveys.id).toBeTruthy();
     });
   });
 });
