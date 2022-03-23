@@ -9,7 +9,7 @@ export class SurveyResultMongoRepository
 {
   async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection(
-      'surveyResults'
+      'surveysResults'
     );
 
     const surveyResult = await surveyResultCollection.findOneAndUpdate(
