@@ -1,10 +1,11 @@
-import { InvalidParamError } from '../../../errors/invalidParamError';
-import { forbidden } from '../../../helpers/http/http';
 import { SaveSurveyResultController } from './save-survey-result';
 import {
   ILoadSurveyById,
   SurveyModel,
   HttpRequest,
+  forbidden,
+  InvalidParamError,
+  serverError,
 } from './save-survey-result-protocols';
 
 type SutTypes = {
@@ -67,5 +68,18 @@ describe('SaveSurveyResult Controller', () => {
     const response = await sut.handle(makeFakeRequest());
 
     expect(response).toEqual(forbidden(new InvalidParamError('surveyId')));
+  });
+
+  test('should return 500 if Load survey by idthrows', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut();
+    jest
+      .spyOn(loadSurveyByIdStub, 'loadById')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      );
+
+    const response = await sut.handle(makeFakeRequest());
+
+    expect(response).toEqual(serverError(new Error()));
   });
 });
