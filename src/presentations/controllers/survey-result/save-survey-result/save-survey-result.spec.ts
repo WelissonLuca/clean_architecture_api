@@ -11,6 +11,7 @@ import {
   ISaveSurveyResult,
   SurveyResultModel,
   SaveSurveyResultModel,
+  ok,
 } from './save-survey-result-protocols';
 
 type SutTypes = {
@@ -163,5 +164,13 @@ describe('SaveSurveyResult Controller', () => {
     const response = await sut.handle(makeFakeRequest());
 
     expect(response).toEqual(serverError(new Error()));
+  });
+
+  test('should return 200 on success', async () => {
+    const { sut } = makeSut();
+
+    const response = await sut.handle(makeFakeRequest());
+
+    expect(response).toEqual(ok(makeFakeSurveyResult()));
   });
 });
