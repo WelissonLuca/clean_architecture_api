@@ -1,4 +1,3 @@
-import { serverError } from '../../../helpers/http/http';
 import {
   IController,
   HttpRequest,
@@ -7,6 +6,8 @@ import {
   forbidden,
   InvalidParamError,
   ISaveSurveyResult,
+  ok,
+  serverError,
 } from './save-survey-result-protocols';
 
 export class SaveSurveyResultController implements IController {
@@ -28,17 +29,16 @@ export class SaveSurveyResultController implements IController {
           return forbidden(new InvalidParamError('answer'));
         }
 
-        await this.saveSurveyResult.save({
+        const surveyResult = await this.saveSurveyResult.save({
           accountId,
           surveyId,
           date: new Date(),
           answer,
         });
-      } else {
-        return forbidden(new InvalidParamError('surveyId'));
-      }
 
-      return null;
+        return ok(surveyResult);
+      }
+      return forbidden(new InvalidParamError('surveyId'));
     } catch (error) {
       return serverError(error);
     }
