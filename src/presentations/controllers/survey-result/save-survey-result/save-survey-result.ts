@@ -1,5 +1,6 @@
-import { InvalidParamError } from '../../../errors/invalidParamError';
-import { forbidden } from '../../../helpers/http/http';
+import { InvalidParamError } from '@presentations/errors/invalidParamError';
+import { forbidden } from '@presentations/helpers/http/http';
+
 import {
   IController,
   HttpRequest,
