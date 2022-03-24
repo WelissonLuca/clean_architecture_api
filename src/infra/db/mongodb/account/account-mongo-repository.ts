@@ -1,9 +1,11 @@
 import { ILoadAccountByEmailRepository } from '@data/protocols/db/account/load-account-by-email-repository';
 import { ILoadAccountByTokenRepository } from '@data/protocols/db/account/load-account-by-token-repository';
 import { IUpdateAcessTokenRepository } from '@data/protocols/db/account/uodate-acess-token-repository';
-import { IAddAccountRepository } from '@data/useCases/add-account/db-add-account-protocols';
+import {
+  AddAccountModel,
+  IAddAccountRepository,
+} from '@data/useCases/account/add-account/db-add-account-protocols';
 import { AccountModel } from '@domain/models/account';
-import { AddAccountModel } from '@domain/useCases/addAccount';
 
 import { MongoHelper } from '../helpers/mongo-helper';
 

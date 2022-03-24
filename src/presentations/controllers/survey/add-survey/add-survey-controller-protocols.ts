@@ -1,2 +1,2 @@
-export * from '@domain/useCases/addSurvey';
+export * from '@domain/useCases/survey/addSurvey';
 export * from '@presentations/protocols';
