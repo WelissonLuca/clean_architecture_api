@@ -10,7 +10,7 @@ import {
   serverError,
   ISaveSurveyResult,
   SurveyResultModel,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
   ok,
 } from './save-survey-result-protocols';
 
@@ -62,7 +62,7 @@ const makeLoadSurveyByIdStub = (): ILoadSurveyById => {
 
 const makeSaveSurveyResultStub = (): ISaveSurveyResult => {
   class SaveSurveyResultStub implements ISaveSurveyResult {
-    async save(survey: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(survey: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return new Promise((resolve) => resolve(makeFakeSurveyResult()));
     }
   }

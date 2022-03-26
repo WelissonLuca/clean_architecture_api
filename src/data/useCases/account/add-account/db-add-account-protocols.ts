@@ -2,7 +2,7 @@ export { ILoadAccountByEmailRepository } from '@data/protocols/db/account/load-a
 export { AccountModel } from '@domain/models/account';
 export {
   IAddAccount,
-  AddAccountModel,
+  AddAccountParams,
 } from '@domain/useCases/account/addAccount';
 export { IHasher } from '@data/protocols/cripthografy/hasher';
 export { IAddAccountRepository } from '@data/protocols/db/account/add-account-repository';

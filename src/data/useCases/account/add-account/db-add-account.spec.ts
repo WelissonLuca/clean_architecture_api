@@ -1,7 +1,7 @@
 import { DbAddAccount } from './db-add-account';
 import {
   AccountModel,
-  AddAccountModel,
+  AddAccountParams,
   IHasher,
   IAddAccountRepository,
   ILoadAccountByEmailRepository,
@@ -31,7 +31,7 @@ const makeFakeAccount = (): AccountModel => ({
   password: 'valid_password',
 });
 
-const makeAccountData = (): AddAccountModel => ({
+const makeAccountData = (): AddAccountParams => ({
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password',
@@ -39,7 +39,7 @@ const makeAccountData = (): AddAccountModel => ({
 
 const makeAddAccountRepository = (): IAddAccountRepository => {
   class AddAccountRepositoryStub implements IAddAccountRepository {
-    async add(accountData: AddAccountModel): Promise<AccountModel> {
+    async add(accountData: AddAccountParams): Promise<AccountModel> {
       return new Promise((resolve) => resolve(makeFakeAccount()));
     }
   }

@@ -3,7 +3,7 @@ import mockDate from 'mockdate';
 import { DbSaveSurveyResult } from './save-survey-result';
 import {
   ISaveSurveyResultRepository,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
   SurveyResultModel,
 } from './save-survey-result-protocols';
 
@@ -20,7 +20,7 @@ const makeFakeSurveyResultData = (): SurveyResultModel => ({
   date: new Date(),
 });
 
-const surveyResultData = (): Omit<SaveSurveyResultModel, 'id'> => ({
+const surveyResultData = (): Omit<SaveSurveyResultParams, 'id'> => ({
   surveyId: 'any_id',
   accountId: 'any_account_id',
   answer: 'any_answer',
@@ -29,7 +29,7 @@ const surveyResultData = (): Omit<SaveSurveyResultModel, 'id'> => ({
 
 const makeSaveSurveyResultRepository = () => {
   class SaveSurveyResultRepositoryStub implements ISaveSurveyResultRepository {
-    async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return new Promise((resolve) => resolve(makeFakeSurveyResultData()));
     }
   }

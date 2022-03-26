@@ -2,5 +2,5 @@ export { ISaveSurveyResultRepository } from '@data/protocols/db/survey-result/sa
 export { SurveyResultModel } from '@domain/models/survey-result';
 export {
   ISaveSurveyResult,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
 } from '@domain/useCases/survey-result/save-survey-result';

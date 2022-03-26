@@ -11,7 +11,7 @@ import {
   HttpRequest,
   IAuthentication,
   IValidation,
-  IAuthenticationModel,
+  IAuthenticationParams,
 } from './login-controller-protocols';
 
 type SutTypes = {
@@ -31,7 +31,7 @@ const makeValidation = (): IValidation => {
 
 const makeAuthentication = (): IAuthentication => {
   class AuthenticationStub implements IAuthentication {
-    async auth(authentication: IAuthenticationModel): Promise<string> {
+    async auth(authentication: IAuthenticationParams): Promise<string> {
       return Promise.resolve('any_token');
     }
   }

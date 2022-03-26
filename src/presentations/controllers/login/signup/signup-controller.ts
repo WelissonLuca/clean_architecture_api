@@ -8,7 +8,7 @@ import {
 
 import {
   IAddAccount,
-  AddAccountModel,
+  AddAccountParams,
   IAuthentication,
   IController,
   HttpRequest,
@@ -37,7 +37,7 @@ export class SignupController implements IController {
         name,
         email,
         password,
-      } as AddAccountModel);
+      } as AddAccountParams);
 
       if (!account) {
         return forbidden(new EmailInUseError());

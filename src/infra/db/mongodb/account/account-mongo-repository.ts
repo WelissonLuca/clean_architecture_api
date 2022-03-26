@@ -2,7 +2,7 @@ import { ILoadAccountByEmailRepository } from '@data/protocols/db/account/load-a
 import { ILoadAccountByTokenRepository } from '@data/protocols/db/account/load-account-by-token-repository';
 import { IUpdateAcessTokenRepository } from '@data/protocols/db/account/uodate-acess-token-repository';
 import {
-  AddAccountModel,
+  AddAccountParams,
   IAddAccountRepository,
 } from '@data/useCases/account/add-account/db-add-account-protocols';
 import { AccountModel } from '@domain/models/account';
@@ -16,7 +16,7 @@ export class AccountMongoRepository
     IUpdateAcessTokenRepository,
     ILoadAccountByTokenRepository
 {
-  async add(accountData: AddAccountModel): Promise<AccountModel> {
+  async add(accountData: AddAccountParams): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
 
     const result = await accountCollection.insertOne(accountData);

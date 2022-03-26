@@ -10,11 +10,11 @@ import { SignupController } from './signup-controller';
 import {
   AccountModel,
   IAddAccount,
-  AddAccountModel,
+  AddAccountParams,
   HttpRequest,
   IValidation,
   IAuthentication,
-  IAuthenticationModel,
+  IAuthenticationParams,
 } from './signup-controller-protocols';
 
 type SutTypes = {
@@ -42,7 +42,7 @@ const makeFakeAccount = (): AccountModel => ({
 
 const makeAddAccount = (): IAddAccount => {
   class AddAccountStub implements IAddAccount {
-    async add(account: AddAccountModel): Promise<AccountModel> {
+    async add(account: AddAccountParams): Promise<AccountModel> {
       return Promise.resolve(makeFakeAccount());
     }
   }
@@ -51,7 +51,7 @@ const makeAddAccount = (): IAddAccount => {
 
 const makeAuthentication = (): IAuthentication => {
   class AuthenticationStub implements IAuthentication {
-    async auth(authentication: IAuthenticationModel): Promise<string> {
+    async auth(authentication: IAuthenticationParams): Promise<string> {
       return Promise.resolve('any_token');
     }
   }

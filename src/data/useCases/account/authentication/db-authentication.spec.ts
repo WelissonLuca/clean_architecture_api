@@ -1,7 +1,7 @@
 import { DbAuthentication } from './db-authentcation';
 import {
   AccountModel,
-  IAuthenticationModel,
+  IAuthenticationParams,
   IHashCompare,
   ILoadAccountByEmailRepository,
   IEncrypter,
@@ -23,11 +23,11 @@ const makeFakeAccount = (): AccountModel =>
     password: 'hashed_password',
   } as AccountModel);
 
-const makeFakeAuthentication = (): IAuthenticationModel =>
+const makeFakeAuthentication = (): IAuthenticationParams =>
   ({
     email: 'any_email@mail.com',
     password: 'any_password',
-  } as IAuthenticationModel);
+  } as IAuthenticationParams);
 
 const makeHashCompare = (): IHashCompare => {
   class HashCompareStub implements IHashCompare {

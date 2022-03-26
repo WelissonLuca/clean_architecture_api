@@ -2,7 +2,7 @@ import mockDate from 'mockdate';
 
 import { DbAddSurvey } from './db-add-survey';
 import {
-  AddSurveyModel,
+  AddSurveyParams,
   IAddSurveyRepository,
 } from './db-add-survey-protocols';
 
@@ -24,7 +24,7 @@ const makeFakeSurveyData = () => ({
 
 const makeAddSurveyRepository = () => {
   class AddSurveyRepositoryStub implements IAddSurveyRepository {
-    async add(surveyData: AddSurveyModel): Promise<void> {
+    async add(surveyData: AddSurveyParams): Promise<void> {
       return new Promise((resolve) => resolve());
     }
   }
