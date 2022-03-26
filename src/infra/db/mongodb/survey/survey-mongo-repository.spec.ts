@@ -1,5 +1,7 @@
 import { Collection } from 'mongodb';
 
+import { mockSurveyData, mockSurveys } from '@domain/test';
+
 import { MongoHelper } from '../helpers/mongo-helper';
 import { SurveyMongoRepository } from './survey-mongo-repository';
 
@@ -25,19 +27,7 @@ describe('Mongo Repository', () => {
     test('Should add a survey on success', async () => {
       const sut = makeSut();
 
-      await sut.add({
-        answers: [
-          {
-            image: 'any_image',
-            answer: 'any_answer',
-          },
-          {
-            answer: 'any_answer',
-          },
-        ],
-        question: 'any_question',
-        date: new Date(),
-      });
+      await sut.add(mockSurveyData());
 
       const survey = await surveyCollection.findOne({
         question: 'any_question',
@@ -49,34 +39,7 @@ describe('Mongo Repository', () => {
 
   describe('loadAll()', () => {
     test('Should load all surveys on success', async () => {
-      await surveyCollection.insertMany([
-        {
-          question: 'any_question',
-          answers: [
-            {
-              image: 'any_image',
-              answer: 'any_answer',
-            },
-            {
-              answer: 'any_answer',
-            },
-          ],
-          date: new Date(),
-        },
-        {
-          question: 'other_question',
-          answers: [
-            {
-              image: 'other_image',
-              answer: 'other_answer',
-            },
-            {
-              answer: 'other_answer',
-            },
-          ],
-          date: new Date(),
-        },
-      ]);
+      await surveyCollection.insertMany(mockSurveys());
 
       const sut = makeSut();
       const surveys = await sut.loadAll();
@@ -97,19 +60,7 @@ describe('Mongo Repository', () => {
 
   describe('loadById()', () => {
     test('Should load survey by id on success', async () => {
-      const res = await surveyCollection.insertOne({
-        question: 'any_question',
-        answers: [
-          {
-            image: 'any_image',
-            answer: 'any_answer',
-          },
-          {
-            answer: 'any_answer',
-          },
-        ],
-        date: new Date(),
-      });
+      const res = await surveyCollection.insertOne(mockSurveyData());
 
       const sut = makeSut();
       const surveys = await sut.loadById(res.ops[0]._id);
