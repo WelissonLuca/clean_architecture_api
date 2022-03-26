@@ -1,52 +1,18 @@
 import mockDate from 'mockdate';
 
+import { mockLoadSurveysRepository } from '@data/test';
+import { mockSurveys, throwError } from '@domain/test';
+
 import { DbLoadSurveys } from './db-load-surveys';
-import {
-  ILoadSurveysRepository,
-  SurveyModel,
-} from './db-load-surveys-protocols';
+import { ILoadSurveysRepository } from './db-load-surveys-protocols';
 
 type SutTypes = {
   sut: DbLoadSurveys;
   loadSurveysRepositoryStub: ILoadSurveysRepository;
 };
 
-const makeFakeSurveys = (): SurveyModel[] => [
-  {
-    id: 'any_id',
-    question: 'any_question',
-    answers: [
-      {
-        image: 'any_image',
-        answer: 'any_answer',
-      },
-    ],
-    date: new Date(),
-  },
-  {
-    id: 'other_id',
-    question: 'other_question',
-    answers: [
-      {
-        image: 'other_image',
-        answer: 'other_answer',
-      },
-    ],
-    date: new Date(),
-  },
-];
-
-const makeLoadSurveysRepository = (): ILoadSurveysRepository => {
-  class LoadSurveysRepositoryStub implements ILoadSurveysRepository {
-    async loadAll(): Promise<SurveyModel[]> {
-      return new Promise((resolve) => resolve(makeFakeSurveys()));
-    }
-  }
-  return new LoadSurveysRepositoryStub();
-};
-
 const makeSut = (): SutTypes => {
-  const loadSurveysRepositoryStub = makeLoadSurveysRepository();
+  const loadSurveysRepositoryStub = mockLoadSurveysRepository();
   const sut = new DbLoadSurveys(loadSurveysRepositoryStub);
   return {
     sut,
@@ -76,16 +42,14 @@ describe('DbLoadSurveys UseCase', () => {
 
     const surveys = await sut.load();
 
-    expect(surveys).toEqual(makeFakeSurveys());
+    expect(surveys).toEqual(mockSurveys());
   });
 
   test('Should throw if load survey repository throws', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut();
     jest
       .spyOn(loadSurveysRepositoryStub, 'loadAll')
-      .mockReturnValueOnce(
-        new Promise((resolve, reject) => reject(new Error()))
-      );
+      .mockImplementationOnce(throwError);
 
     const promise = sut.load();
 

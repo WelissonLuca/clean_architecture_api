@@ -1,39 +1,18 @@
 import mockDate from 'mockdate';
 
+import { mockAddSurveyRepository } from '@data/test';
+import { mockSurveyData, throwError } from '@domain/test';
+
 import { DbAddSurvey } from './db-add-survey';
-import {
-  AddSurveyParams,
-  IAddSurveyRepository,
-} from './db-add-survey-protocols';
+import { IAddSurveyRepository } from './db-add-survey-protocols';
 
 type SutTypes = {
   sut: DbAddSurvey;
   addSurveyRepositoryStub: IAddSurveyRepository;
 };
 
-const makeFakeSurveyData = () => ({
-  question: 'any_question',
-  answers: [
-    {
-      image: 'any_image',
-      answer: 'any_answer',
-    },
-  ],
-  date: new Date(),
-});
-
-const makeAddSurveyRepository = () => {
-  class AddSurveyRepositoryStub implements IAddSurveyRepository {
-    async add(surveyData: AddSurveyParams): Promise<void> {
-      return new Promise((resolve) => resolve());
-    }
-  }
-
-  return new AddSurveyRepositoryStub();
-};
-
 const makeSut = (): SutTypes => {
-  const addSurveyRepositoryStub = makeAddSurveyRepository();
+  const addSurveyRepositoryStub = mockAddSurveyRepository();
   const sut = new DbAddSurvey(addSurveyRepositoryStub);
 
   return {
@@ -52,7 +31,7 @@ describe('DbAddSurvey UseCase', () => {
   it('should call add survey repository with correct values', () => {
     const { sut, addSurveyRepositoryStub } = makeSut();
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add');
-    const surveyData = makeFakeSurveyData();
+    const surveyData = mockSurveyData();
     sut.add(surveyData);
     expect(addSpy).toHaveBeenCalledWith(surveyData);
   });
@@ -61,11 +40,9 @@ describe('DbAddSurvey UseCase', () => {
     const { sut, addSurveyRepositoryStub } = makeSut();
     jest
       .spyOn(addSurveyRepositoryStub, 'add')
-      .mockReturnValueOnce(
-        new Promise((resolve, reject) => reject(new Error()))
-      );
+      .mockImplementationOnce(throwError);
 
-    const promise = sut.add(makeFakeSurveyData());
+    const promise = sut.add(mockSurveyData());
 
     expect(promise).rejects.toThrow();
   });
