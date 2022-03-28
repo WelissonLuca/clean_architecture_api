@@ -1,6 +1,4 @@
-import { mockLoadAccountByTokenRepository } from '@data/test';
-import { AccountModel } from '@domain/models/account';
-import { mockAccountModel, throwError } from '@domain/test';
+import { throwError } from '@domain/test';
 import { mockLoadAccountByToken } from '@presentations/test';
 
 import { AuthMiddleware } from './auth-middleware';
@@ -54,7 +52,7 @@ describe('Auth IMiddleware', () => {
 
     jest
       .spyOn(loadAccountByTokenStub, 'load')
-      .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
+      .mockReturnValueOnce(Promise.resolve(null));
 
     const httpResponse = await sut.handle(mockRequest());
 

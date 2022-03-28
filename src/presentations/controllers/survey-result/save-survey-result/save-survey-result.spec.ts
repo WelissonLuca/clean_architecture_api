@@ -69,7 +69,7 @@ describe('SaveSurveyResult Controller', () => {
 
     jest
       .spyOn(loadSurveyByIdStub, 'loadById')
-      .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
+      .mockReturnValueOnce(Promise.resolve(null));
 
     const response = await sut.handle(mockRequest());
 

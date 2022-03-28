@@ -21,6 +21,6 @@ export class DbLoadAccountByToken {
       }
     }
 
-    return new Promise((resolve) => resolve(null));
+    return Promise.resolve(null);
   }
 }

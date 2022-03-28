@@ -28,7 +28,7 @@ export class AuthMiddleware implements IMiddleware {
         }
       }
       const error = forbidden(new AccessDenied());
-      return new Promise((resolve) => resolve(error));
+      return Promise.resolve(error);
     } catch (error) {
       return serverError(error);
     }

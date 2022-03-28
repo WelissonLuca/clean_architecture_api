@@ -8,16 +8,16 @@ export class BcryptAdapter implements IHasher, IHashCompare {
   async hash(value: string): Promise<string> {
     const hasher = await hash(value, this.salt);
 
-    return new Promise((resolve) => resolve(hasher));
+    return Promise.resolve(hasher);
   }
 
   async compare(value: string, hash: string): Promise<boolean> {
     const isvalid = await compare(value, hash);
 
     if (!isvalid) {
-      return new Promise((resolve) => resolve(false));
+      return Promise.resolve(false);
     }
 
-    return new Promise((resolve) => resolve(true));
+    return Promise.resolve(true);
   }
 }

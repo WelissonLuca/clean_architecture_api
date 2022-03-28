@@ -33,9 +33,9 @@ export class AddSurveyController implements IController {
         date: new Date(),
       });
 
-      return new Promise((resolve) => resolve(noContent()));
+      return Promise.resolve(noContent());
     } catch (error) {
-      return new Promise((resolve) => resolve(serverError(error)));
+      return Promise.resolve(serverError(error));
     }
   }
 }
