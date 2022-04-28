@@ -1270,10 +1270,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@shelf/jest-mongodb@^2.2.0":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@shelf/jest-mongodb/-/jest-mongodb-2.2.1.tgz#cd9846195f5e1bca5815b9401f95e4d4402b2a92"
-  integrity sha512-5wvUkePp18Q/TzydClAu5x4+YAyxWu/sVKcaBArGWNLab0WZORl6G8Wt7TtL3mGeZXa75oftO7xCEVPbr0NI3w==
+"@shelf/jest-mongodb@2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@shelf/jest-mongodb/-/jest-mongodb-2.2.2.tgz#ec0de0e8ac6e68fdb9088e61baa143efc1cfc62b"
+  integrity sha512-trlJCZ0wPWHlsyr6WBDk+DshYwMg7UiXsCCz/XH3jLtEyCKKUOGn8UUI9KCJY/SwCiHmNFSWHrOjVqM/RKC1Iw==
   dependencies:
     debug "4.3.2"
     mongodb-memory-server "7.6.3"
